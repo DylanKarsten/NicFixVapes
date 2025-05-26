@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NicFix - Premium Vapes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(-45deg, #FF0000, #FF7F00, #FFFF00, #00FF00, #0000FF, #4B0082, #8B00FF);
+            background-size: 400% 400%;
+            animation: gradientBG 25s ease infinite;
+            color: #e5e5e5; /* General light text color */
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.93); 
+            display: flex; align-items: center; justify-content: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background-color: #1e293b; 
+            color: #e5e5e5;
+            padding: 2.5rem 3rem; 
+            border-radius: 0.85rem; 
+            text-align: center;
+            max-width: 90%;
+            width: 520px; 
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.75); 
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .modal-content h2 { font-size: 2.1rem; line-height: 2.5rem; } 
+        .modal-content p { font-size: 1.15rem; line-height: 1.75rem; } 
+
+
+        .btn-disabled { opacity: 0.35; cursor: not-allowed; }
+
+        .rainbow-button {
+            color: white; font-weight: 600; 
+            padding: 0.9rem 2rem; 
+            border-radius: 0.6rem; 
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); 
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); 
+            border: none;
+            display: inline-block;
+        }
+        .rainbow-button:hover {
+            transform: translateY(-4px) scale(1.03); 
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.15), 0 4px 6px -2px rgba(0,0,0,0.1); 
+        }
+        .rainbow-button:active {
+            transform: translateY(-1px) scale(0.99); 
+            box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px 0 rgba(0,0,0,0.06); 
+        }
+
+        .btn-red { background-color: #FF3B30; } .btn-red:hover { background-color: #E12D22; }
+        .btn-orange { background-color: #FF9500; } .btn-orange:hover { background-color: #E18400; }
+        .btn-yellow { background-color: #FFCC00; color: #1A202C; } .btn-yellow:hover { background-color: #E1B400; }
+        .btn-green { background-color: #34C759; } .btn-green:hover { background-color: #2DAA4C; } 
+        .btn-blue { background-color: #007AFF; } .btn-blue:hover { background-color: #0069E1; }
+        .btn-indigo { background-color: #5856D6; } .btn-indigo:hover { background-color: #4D4BC4; }
+        .btn-violet { background-color: #AF52DE; } .btn-violet:hover { background-color: #9A43C3; }
+
+        .rainbow-text {
+            background: linear-gradient(to right, #FF0000, #FF7F00, #FFFF00, #00FF00, #0000FF, #4B0082, #8B00FF);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            animation: rainbowTextAnimation 10s linear infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes rainbowTextAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .nav-link {
+            text-decoration: none; color: #e5e5e5;
+            padding-bottom: 0.4rem; 
+            transition: color 0.25s ease-in-out, border-color 0.25s ease-in-out;
+            border-bottom: 3px solid transparent; 
+        }
+        .nav-link.active-tab, .tab-button.active-tab {
+            border-bottom-width: 3px; 
+        }
+        .nav-link:not(.active-tab):hover {
+            border-bottom-width: 3px; 
+        }
+
+        .content-card {
+            background-color: rgba(10, 10, 20, 0.9); 
+            backdrop-filter: blur(14px); 
+            border-radius: 1rem; 
+            padding: 2.5rem;
+            box-shadow: 0 15px 30px -10px rgba(0,0,0,0.6); 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+        }
+        @media (min-width: 640px) {
+            .content-card {
+                padding: 2.5rem 3rem;
+            }
+        }
+        .content-card h2 { /* Added subtle text shadow for main headings */
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+        }
+        .header-card {
+             background-color: rgba(0,0,0,0.88); 
+             backdrop-filter: blur(16px); 
+             border-bottom: 1px solid rgba(255,255,255,0.07); 
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <div id="ageVerificationModal" class="modal-overlay">
+        <div class="modal-content">
+            <h2 class="text-3xl font-bold mb-6">Age Verification</h2>
+            <p class="mb-10 text-lg">You must be 18 years or older to enter NicFix. Please confirm your age to continue.</p>
+            <div class="flex justify-center space-x-6">
+                <button id="confirmAgeBtn" class="rainbow-button btn-green">I am 18+</button>
+                <button id="declineAgeBtn" class="rainbow-button btn-red">I am under 18</button>
+            </div>
+            <p id="underageMessage" class="text-red-400 mt-8 font-semibold text-md" style="display: none;">Sorry, you must be 18 or older to access this site.</p>
+        </div>
+    </div>
+
+    <div id="mainContent" style="display: none;" class="flex-grow flex flex-col">
+        <header class="header-card shadow-lg sticky top-0 z-50">
+            <div class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+                <div class="flex items-center space-x-3 sm:space-x-4">
+                    <img src="NixFix.jpg" alt="NicFix Logo" class="h-10 sm:h-12 md:h-14 w-auto rounded-md" onerror="this.outerHTML = `<div class='h-10 sm:h-12 md:h-14 w-28 flex-shrink-0 items-center justify-center border-2 border-dashed border-gray-500 rounded-md bg-gray-700/70 text-gray-300 text-xs p-2 text-center leading-tight shadow-inner'>Logo Not Found:<br>NicFix.jpg</div>`; console.error('Logo not found: NicFix.jpg. Please ensure the image file is in the correct path.');">
+                    <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold rainbow-text">NicFix</h1>
+                </div>
+                <nav>
+                    <ul class="flex space-x-4 sm:space-x-8">
+                        <li><button data-tab="home" class="tab-button nav-link text-base sm:text-lg font-semibold">Home</button></li>
+                        <li><a href="Shop.html" class="nav-link text-base sm:text-lg font-semibold hover:text-orange-300 hover:border-orange-300">Shop</a></li>
+                        <li><a href="Social.html" class="nav-link text-base sm:text-lg font-semibold hover:text-yellow-300 hover:border-yellow-300">Social</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <main class="container mx-auto px-4 sm:px-6 py-12 md:py-16 lg:py-20 flex-grow"> 
+            <div id="home" class="tab-content space-y-12 md:space-y-16">
+                <div class="content-card text-center">
+                    <h2 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-red-400 to-yellow-400">Elevate Your Experience.</h2>
+                    <p class="text-lg sm:text-xl text-gray-200 font-medium mb-8 leading-relaxed max-w-3xl mx-auto">
+                        Discover a curated selection of premium vapes at <span class="font-bold rainbow-text">NicFix</span>. We're committed to bringing you the most durable devices and exceptional flavors, with fast, reliable delivery on every single order.
+                    </p>
+                    <a href="Shop.html" class="rainbow-button btn-indigo text-lg">Explore Our Flavors</a>
+                    <p class="text-lg sm:text-xl text-gray-50 font-medium mt-10 italic">
+                        Kom bederf jouself!
+                    </p>
+                </div>
+                
+                <div class="relative mx-auto w-full max-w-md md:max-w-xl lg:max-w-3xl aspect-video rounded-lg shadow-2xl overflow-hidden"> 
+                    <video src="NicFix_2.mp4" loop autoplay muted playsinline
+                           style="pointer-events: none;" 
+                           class="absolute top-0 left-0 w-full h-full object-contain"
+                           onerror="this.parentElement.innerHTML = `<div class='w-full h-full flex items-center justify-center border-2 border-dashed border-gray-600 bg-gray-700/60 text-gray-400 text-center p-4 rounded-lg'>Video Not Found:<br>NicFix_2.mp4<br><span class=\'text-xs\'>Please ensure the video file is in the correct path.</span></div>`; console.error('Video not found: NicFix_2.mp4. Ensure file exists or path is correct.');">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+
+                <div class="content-card">
+                    <h3 class="text-3xl sm:text-4xl font-bold text-center mb-8">Why Choose NicFix?</h3>
+                    <div class="grid md:grid-cols-3 gap-8 text-center">
+                        <div class="p-4">
+                            <h4 class="text-2xl font-semibold mb-3 rainbow-text">Premium Quality</h4>
+                            <p class="text-gray-300">We stock only the most reliable and durable vapes from trusted brands, ensuring a consistently great experience.</p>
+                        </div>
+                        <div class="p-4">
+                             <h4 class="text-2xl font-semibold mb-3 rainbow-text">Fast Delivery</h4>
+                             <p class="text-gray-300">Located in Springs, Gauteng, we offer speedy local delivery so you get your fix, faster.</p>
+                        </div>
+                        <div class="p-4">
+                             <h4 class="text-2xl font-semibold mb-3 rainbow-text">Top-Tier Service</h4>
+                             <p class="text-gray-300">Your satisfaction is our priority. Our team is dedicated to providing friendly and efficient service, every time.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="shop" class="tab-content">
+                </div>
+
+            <div id="social" class="tab-content">
+                </div>
+        </main>
+
+        <footer class="bg-black/90 py-10 text-center border-t border-gray-700/50 mt-auto"> 
+            <p class="text-gray-200 text-lg">&copy; <span id="currentYear"></span> <span class="font-bold rainbow-text">NicFix</span>. All rights reserved.</p>
+            <p class="text-sm text-gray-400 mt-3 px-4">Based in Springs, Gauteng, South Africa. Responsible vaping is advised. Products are for adult use only (18+).</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const ageVerificationModal = document.getElementById('ageVerificationModal');
+            const confirmAgeBtn = document.getElementById('confirmAgeBtn');
+            const declineAgeBtn = document.getElementById('declineAgeBtn');
+            const underageMessage = document.getElementById('underageMessage');
+            const mainContent = document.getElementById('mainContent');
+
+            const homeTabButton = document.querySelector('.tab-button[data-tab="home"]');
+            const tabContents = document.querySelectorAll('.tab-content'); 
+            
+            const rainbowColors = ['#FF3B30', '#FF9500', '#FFCC00', '#34C759', '#007AFF', '#5856D6', '#AF52DE'];
+            let colorIndex = 0;
+
+            // --- Age Verification ---
+            if (sessionStorage.getItem('ageVerified') === 'true') {
+                ageVerificationModal.style.display = 'none';
+                mainContent.style.display = 'flex'; 
+                mainContent.classList.add('flex-col'); 
+                showTab('home'); 
+            } else {
+                ageVerificationModal.style.display = 'flex';
+            }
+
+            confirmAgeBtn.addEventListener('click', async () => { // Made async for Tone.start()
+                sessionStorage.setItem('ageVerified', 'true');
+                ageVerificationModal.style.display = 'none';
+                mainContent.style.display = 'flex'; 
+                mainContent.classList.add('flex-col'); 
+                showTab('home');
+
+                // Play welcome sound
+                if (typeof Tone !== 'undefined') {
+                    try {
+                        await Tone.start(); // Ensure AudioContext is running
+                        const synth = new Tone.Synth({
+                            oscillator: { type: 'sine' },
+                            envelope: {
+                                attack: 0.01,
+                                decay: 0.1,
+                                sustain: 0.3,
+                                release: 0.5
+                            }
+                        }).toDestination();
+                        const now = Tone.now();
+                        // A slightly more melodic and quick welcome chime
+                        synth.triggerAttackRelease("G4", "16n", now);
+                        synth.triggerAttackRelease("C5", "16n", now + 0.15);
+                        synth.triggerAttackRelease("E5", "8n", now + 0.3);
+                    } catch (e) {
+                        console.error("Error playing welcome sound:", e);
+                    }
+                } else {
+                    console.error("Tone.js not loaded, cannot play welcome sound.");
+                }
+            });
+
+            declineAgeBtn.addEventListener('click', () => {
+                underageMessage.style.display = 'block';
+                confirmAgeBtn.disabled = true;
+                confirmAgeBtn.classList.add('btn-disabled');
+                declineAgeBtn.disabled = true; 
+                declineAgeBtn.classList.add('btn-disabled');
+            });
+
+            // --- Tab Navigation for Home Tab ---
+            function showTab(tabId) {
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                    if (content.id === tabId) {
+                        content.classList.add('active');
+                    }
+                });
+                
+                document.querySelectorAll('.tab-button').forEach(button => {
+                    button.classList.remove('active-tab');
+                    button.style.color = '#e5e5e5';
+                    button.style.borderColor = 'transparent';
+                });
+
+                const activeButton = document.querySelector(`.tab-button[data-tab="${tabId}"]`);
+                if (activeButton) {
+                    activeButton.classList.add('active-tab');
+                    const activeColor = rainbowColors[colorIndex % rainbowColors.length];
+                    activeButton.style.color = activeColor;
+                    activeButton.style.borderColor = activeColor;
+                }
+            }
+            
+            let initialTabSet = false;
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabId = button.getAttribute('data-tab');
+                    if (!button.classList.contains('active-tab')) {
+                         colorIndex = (colorIndex + 1) % rainbowColors.length;
+                    }
+                    showTab(tabId);
+                    initialTabSet = true;
+                });
+            });
+
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+            if (sessionStorage.getItem('ageVerified') === 'true' && !initialTabSet) {
+                 showTab('home'); 
+            }
+        });
+    </script>
+
+</body>
+</html>

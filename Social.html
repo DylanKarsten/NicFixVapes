@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social - NicFix Premium Vapes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(-45deg, #1e3a8a, #3b82f6, #60a5fa, #93c5fd, #bfdbfe, #dbeafe, #eff6ff); /* Professional Blue Gradient */
+            background-size: 300% 300%;
+            animation: professionalGradientBG 20s ease infinite;
+            color: #1f2937; /* Darker text for better contrast on light blue */
+        }
+
+        @keyframes professionalGradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .header-card { 
+             background-color: rgba(255, 255, 255, 0.85); /* Lighter header for blue bg */
+             backdrop-filter: blur(14px); 
+             border-bottom: 1px solid rgba(59, 130, 246, 0.2); /* Blueish border */
+             box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.08);
+        }
+
+        .nav-link {
+            text-decoration: none; color: #374151; /* Darker nav links */
+            padding-bottom: 0.4rem; 
+            transition: color 0.25s ease-in-out, border-color 0.25s ease-in-out;
+            border-bottom: 3px solid transparent; 
+            font-weight: 500; 
+        }
+        .nav-link.active-main-nav { 
+            color: #2563eb; /* Stronger blue for active link */
+            border-bottom-color: #2563eb;
+            font-weight: 700; 
+        }
+        .nav-link:not(.active-main-nav):hover {
+            color: #1d4ed8; 
+            border-bottom-color: rgba(37, 99, 235, 0.4); 
+        }
+
+        .rainbow-text { /* Adjusted for better visibility on blue, can be toned down or removed if preferred */
+            background: linear-gradient(to right, #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #8b5cf6, #d946ef);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            animation: rainbowTextAnimation 10s linear infinite;
+            background-size: 200% 200%;
+        }
+         @keyframes rainbowTextAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+
+        .content-card { 
+            background-color: rgba(255, 255, 255, 0.9); /* Lighter cards */
+            backdrop-filter: blur(10px); 
+            border-radius: 0.75rem; 
+            padding: 1.5rem; 
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.15); 
+            color: #1f2937; /* Dark text on cards */
+        }
+         @media (min-width: 640px) {
+            .content-card {
+                padding: 2rem; 
+            }
+        }
+        .social-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .social-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.15);
+        }
+        .social-icon {
+            transition: transform 0.3s ease;
+        }
+        .social-card:hover .social-icon {
+            transform: scale(1.1);
+        }
+
+        .primary-button {
+            background-color: #2563eb; /* Primary blue */
+            color: white;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            display: inline-flex; /* For icon alignment */
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+        .primary-button:hover {
+            background-color: #1d4ed8; /* Darker blue on hover */
+            transform: translateY(-1px);
+        }
+        .primary-button i {
+            margin-right: 0.5rem;
+        }
+
+        .footer-card {
+            background-color: rgba(17, 24, 39, 0.9); /* Dark footer for contrast */
+            color: #e0e7ff;
+            border-top: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <header class="header-card shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3 sm:space-x-4">
+                <a href="index.html"> 
+                    <img src="NixFix.jpg" alt="NicFix Logo" class="h-10 sm:h-12 w-auto rounded-md" onerror="this.outerHTML = `<div class='h-10 sm:h-12 w-24 flex-shrink-0 items-center justify-center border-2 border-dashed border-gray-400 rounded-md bg-gray-100 text-gray-500 text-xs p-2 text-center leading-tight shadow-inner'>Logo Not Found:<br>NicFix.jpg</div>`; console.error('Logo not found: NicFix.jpg. Please ensure the image file is in the correct path.');">
+                </a>
+                <a href="index.html" class="text-2xl sm:text-3xl font-extrabold rainbow-text">NicFix</a>
+            </div>
+            <nav>
+                <ul class="flex space-x-3 sm:space-x-6 items-center">
+                    <li><a href="index.html" class="nav-link text-sm sm:text-base">Home</a></li>
+                    <li><a href="Shop.html" class="nav-link text-sm sm:text-base">Shop</a></li> 
+                    <li><a href="Social.html" class="nav-link text-sm sm:text-base active-main-nav">Social</a></li>
+                    <li>
+                        <a href="#" id="cartLink" class="relative text-slate-600 hover:text-blue-600 transition-colors p-2 rounded-full hover:bg-blue-100/50" title="Shopping Cart">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                            <span id="cartItemCount" class="absolute -top-1 -right-1 text-xs bg-blue-600 text-white rounded-full px-1.5 py-0.5 min-w-[18px] text-center font-semibold">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 py-10 md:py-12 lg:py-16 flex-grow">
+        <div class="text-center mb-10 md:mb-14">
+            <h1 class="text-4xl sm:text-5xl font-bold text-slate-800">Connect With NicFix</h1>
+            <p class="text-lg sm:text-xl text-slate-600 mt-3 max-w-2xl mx-auto">Stay updated with our latest products, offers, and vape culture. Follow us!</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            <div class="content-card social-card text-center">
+                <i class="fab fa-instagram text-5xl sm:text-6xl mb-4 text-pink-500 social-icon"></i>
+                <h2 class="text-2xl sm:text-3xl font-semibold mb-3 text-slate-700">Instagram</h2>
+                <p class="text-slate-500 mb-6 text-sm sm:text-base">Follow us for stunning product shots, lifestyle content, and behind-the-scenes glimpses.</p>
+                <a href="https://www.instagram.com/nicfi.x?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="primary-button">
+                    <i class="fab fa-instagram"></i> Follow @nicfi.x
+                </a>
+            </div>
+
+            <div class="content-card social-card text-center">
+                <i class="fab fa-facebook-square text-5xl sm:text-6xl mb-4 text-blue-600 social-icon"></i>
+                <h2 class="text-2xl sm:text-3xl font-semibold mb-3 text-slate-700">Facebook</h2>
+                <p class="text-slate-500 mb-6 text-sm sm:text-base">Join our community! Get updates, share your experiences, and connect with fellow vapers.</p>
+                <a href="https://www.facebook.com/profile.php?id=61575841928133" target="_blank" class="primary-button">
+                     <i class="fab fa-facebook-square"></i> Like Our Page
+                </a>
+            </div>
+
+            <div class="content-card social-card text-center">
+                <i class="fab fa-whatsapp text-5xl sm:text-6xl mb-4 text-green-500 social-icon"></i>
+                <h2 class="text-2xl sm:text-3xl font-semibold mb-3 text-slate-700">WhatsApp</h2>
+                <p class="text-slate-500 mb-6 text-sm sm:text-base">Direct support & quick orders. Add us on WhatsApp for exclusive deals and instant assistance.</p>
+                <a href="https://wa.me/27658408880" target="_blank" class="primary-button"> <i class="fab fa-whatsapp"></i> Chat With Us
+                </a>
+                 <p class="text-xs text-slate-400 mt-3">(+27 65 840 8880)</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer-card py-8 sm:py-10 text-center mt-auto"> 
+        <p class="text-gray-300 text-base sm:text-lg">&copy; <span id="currentYear"></span> <span class="font-bold rainbow-text">NicFix</span>. All rights reserved.</p>
+        <p class="text-xs sm:text-sm text-gray-400 mt-2 px-4">Based in Springs, Gauteng, South Africa. Responsible vaping is advised. Products are for adult use only (18+).</p>
+    </footer>
+
+    <div id="cartModal" class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm flex items-center justify-center z-[1000] hidden p-4 transition-opacity duration-300 ease-in-out opacity-0">
+        <div class="bg-slate-900 p-5 sm:p-6 rounded-xl shadow-2xl w-full max-w-md md:max-w-lg max-h-[90vh] flex flex-col border border-slate-700 transform transition-all duration-300 ease-in-out scale-95 opacity-0" id="cartModalContent">
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-700">
+                <h2 class="text-xl sm:text-2xl font-semibold text-white">Your Shopping Cart</h2>
+                <button id="closeCartModalBtn" class="text-gray-400 hover:text-red-400 transition-colors p-1 rounded-md text-2xl leading-none">&times;</button>
+            </div>
+            <div id="cartModalBody" class="flex-grow overflow-y-auto mb-4 pr-1 space-y-3">
+                <p id="emptyCartMessage" class="text-gray-400 text-center py-8 text-sm">Your cart is currently empty.</p>
+            </div>
+            <div class="border-t border-slate-700 pt-4 space-y-3">
+                <div class="flex justify-between items-center">
+                    <p class="text-md sm:text-lg text-gray-200 font-medium">Subtotal:</p>
+                    <p id="cartTotal" class="text-md sm:text-lg text-white font-semibold">R0.00</p>
+                </div>
+                <button id="checkoutBtn" class="w-full primary-button bg-green-500 hover:bg-green-600 text-sm sm:text-base py-2.5">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+            // Cart functionality (minimal version for social page, assuming cart is managed globally or primarily on shop page)
+            let cart = JSON.parse(sessionStorage.getItem('nicfixCart')) || [];
+            const cartLink = document.getElementById('cartLink');
+            const cartModal = document.getElementById('cartModal');
+            const cartModalContent = document.getElementById('cartModalContent');
+            const closeCartModalBtn = document.getElementById('closeCartModalBtn');
+            const cartModalBody = document.getElementById('cartModalBody');
+            const cartTotalElement = document.getElementById('cartTotal');
+            const cartItemCountElement = document.getElementById('cartItemCount');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            const emptyCartMessage = document.getElementById('emptyCartMessage');
+
+            function updateCartIconCount() {
+                cartItemCountElement.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+            }
+             updateCartIconCount(); // Initial update
+
+            function updateCartModalDisplay() {
+                updateCartIconCount();
+                cartModalBody.innerHTML = ''; 
+                let total = 0;
+
+                if (cart.length === 0) {
+                    // Ensure emptyCartMessage is cloned and appended if it's not already in cartModalBody
+                    if (!cartModalBody.contains(emptyCartMessage)) {
+                         cartModalBody.appendChild(emptyCartMessage.cloneNode(true));
+                    }
+                    const currentEmptyMsg = cartModalBody.querySelector('#emptyCartMessage');
+                    if(currentEmptyMsg) currentEmptyMsg.style.display = 'block';
+                    checkoutBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                } else {
+                    const currentEmptyMsg = cartModalBody.querySelector('#emptyCartMessage');
+                    if(currentEmptyMsg) currentEmptyMsg.style.display = 'none';
+                    checkoutBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    cart.forEach((item, index) => {
+                        const itemElement = document.createElement('div');
+                        itemElement.classList.add('cart-modal-item', 'py-2.5', 'flex', 'justify-between', 'items-center', 'gap-3');
+                        itemElement.innerHTML = `
+                            <div class="flex-grow min-w-0">
+                                <p class="text-white text-sm font-medium truncate" title="${item.name}">${item.name}</p>
+                                <p class="text-purple-300 text-xs">R${parseFloat(item.price).toFixed(2)} x ${item.quantity}</p>
+                            </div>
+                            <p class="text-gray-200 text-sm font-semibold whitespace-nowrap">R${(parseFloat(item.price) * item.quantity).toFixed(2)}</p>
+                            <button class="remove-from-cart-btn text-red-400 hover:text-red-500 text-lg p-1 rounded-md transition-colors" data-index="${index}" title="Remove item">&times;</button>
+                        `;
+                        cartModalBody.appendChild(itemElement);
+                        total += parseFloat(item.price) * item.quantity;
+                    });
+                }
+                cartTotalElement.textContent = `R${total.toFixed(2)}`;
+            }
+            
+            cartModalBody.addEventListener('click', (event) => {
+                if (event.target.classList.contains('remove-from-cart-btn') || event.target.closest('.remove-from-cart-btn')) {
+                    const button = event.target.closest('.remove-from-cart-btn');
+                    const itemIndex = parseInt(button.getAttribute('data-index'));
+                    cart.splice(itemIndex, 1); 
+                    sessionStorage.setItem('nicfixCart', JSON.stringify(cart));
+                    updateCartModalDisplay(); 
+                }
+            });
+
+            function openCartModal() {
+                updateCartModalDisplay();
+                cartModal.classList.remove('hidden');
+                setTimeout(() => { 
+                    cartModal.classList.remove('opacity-0');
+                    cartModalContent.classList.remove('scale-95', 'opacity-0');
+                }, 10);
+            }
+
+            function closeCartModal() {
+                cartModal.classList.add('opacity-0');
+                cartModalContent.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    cartModal.classList.add('hidden');
+                }, 300); 
+            }
+
+            if (cartLink) {
+                cartLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openCartModal();
+                });
+            }
+            if (closeCartModalBtn) {
+                closeCartModalBtn.addEventListener('click', closeCartModal);
+            }
+            cartModal.addEventListener('click', (event) => {
+                if (event.target === cartModal) { 
+                    closeCartModal();
+                }
+            });
+            
+            if (checkoutBtn) {
+                checkoutBtn.addEventListener('click', () => {
+                    if (cart.length === 0) {
+                        const tempMsg = document.createElement('p');
+                        tempMsg.textContent = 'Your cart is empty. Add some items first!';
+                        tempMsg.className = 'text-yellow-400 text-center text-xs my-1';
+                        const cartFooter = checkoutBtn.parentElement;
+                        if (cartFooter) { // Ensure cartFooter exists
+                           cartFooter.insertBefore(tempMsg, cartFooter.firstChild);
+                           setTimeout(() => tempMsg.remove(), 3000);
+                        }
+                        return;
+                    }
+
+                    let emailBody = "Hello NicFix Team,\n\nI would like to place an order for the following items:\n\n";
+                    let totalAmount = 0;
+                    cart.forEach(item => {
+                        emailBody += `- ${item.name} (Quantity: ${item.quantity}) - Price: R${parseFloat(item.price).toFixed(2)} each - Subtotal: R${(parseFloat(item.price) * item.quantity).toFixed(2)}\n`;
+                        totalAmount += parseFloat(item.price) * item.quantity;
+                    });
+                    emailBody += `\n----------------------------------`;
+                    emailBody += `\nGRAND TOTAL: R${totalAmount.toFixed(2)}`;
+                    emailBody += "\n----------------------------------";
+                    emailBody += "\n\nPlease advise on payment methods and delivery options to Springs, Gauteng.";
+                    emailBody += "\n\nLooking forward to my NicFix!";
+                    emailBody += "\n\nKind regards,";
+                    emailBody += "\n[Your Name Here - Please Fill In]";
+
+                    const mailtoLink = `mailto:nalydnetsrak@gmail.com?subject=${encodeURIComponent('New Vape Order from NicFix Website')}&body=${encodeURIComponent(emailBody)}`;
+                    window.location.href = mailtoLink;
+
+                    cart = [];
+                    sessionStorage.removeItem('nicfixCart');
+                    updateCartModalDisplay();
+                    
+                    setTimeout(() => { 
+                        closeCartModal();
+                    }, 500);
+                });
+            }
+
+
+        });
+    </script>
+
+</body>
+</html>

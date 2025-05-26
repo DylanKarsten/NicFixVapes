@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - NicFix Premium Vapes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(-45deg, #FF0000, #FF7F00, #FFFF00, #00FF00, #0000FF, #4B0082, #8B00FF);
+            background-size: 400% 400%;
+            animation: gradientBG 25s ease infinite;
+            color: #e0e7ff; 
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .rainbow-button {
+            color: white; font-weight: 600; 
+            padding: 0.75rem 1.5rem; 
+            border-radius: 0.5rem; 
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); 
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1); 
+            border: none;
+            display: inline-block;
+            text-align: center;
+            position: relative; 
+            overflow: hidden; 
+        }
+        .rainbow-button:hover {
+            transform: translateY(-2px) scale(1.01); 
+            box-shadow: 0 8px 12px -3px rgba(0,0,0,0.15), 0 3px 5px -2px rgba(0,0,0,0.1); 
+        }
+        .rainbow-button:active {
+            transform: translateY(-1px) scale(0.99); 
+            box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1), 0 1px 1px 0 rgba(0,0,0,0.06); 
+        }
+
+        .btn-red { background-color: #FF3B30; } .btn-red:hover { background-color: #E12D22; }
+        .btn-orange { background-color: #FF9500; } .btn-orange:hover { background-color: #E18400; }
+        .btn-yellow { background-color: #FFCC00; color: #1A202C; } .btn-yellow:hover { background-color: #E1B400; }
+        .btn-green { background-color: #34C759; } .btn-green:hover { background-color: #2DAA4C; } 
+        .btn-blue { background-color: #007AFF; } .btn-blue:hover { background-color: #0069E1; }
+        .btn-indigo { background-color: #5856D6; } .btn-indigo:hover { background-color: #4D4BC4; }
+        .btn-violet { background-color: #AF52DE; } .btn-violet:hover { background-color: #9A43C3; }
+        .btn-teal { background-color: #20C997; } .btn-teal:hover { background-color: #1BAA80; }
+        .btn-pink { background-color: #ec4899; } .btn-pink:hover { background-color: #d83785; }
+        .btn-lime { background-color: #84cc16; } .btn-lime:hover { background-color: #73b312;}
+        .btn-cyan { background-color: #06b6d4; } .btn-cyan:hover { background-color: #05a1bd;}
+        .btn-rose { background-color: #f43f5e; } .btn-rose:hover { background-color: #e03350;}
+        .btn-amber { background-color: #fbbf24; color: #44403c; } .btn-amber:hover { background-color: #f59e0b;}
+        .btn-sky { background-color: #38bdf8; } .btn-sky:hover { background-color: #0ea5e9;}
+
+
+        .rainbow-text {
+            background: linear-gradient(to right, #FF0000, #FF7F00, #FFFF00, #00FF00, #0000FF, #4B0082, #8B00FF);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            animation: rainbowTextAnimation 10s linear infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes rainbowTextAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .nav-link {
+            text-decoration: none; color: #c7d2fe; 
+            padding-bottom: 0.4rem; 
+            transition: color 0.25s ease-in-out, border-color 0.25s ease-in-out;
+            border-bottom: 3px solid transparent; 
+            font-weight: 500; 
+        }
+        .nav-link.active-main-nav { 
+            color: #FF9500; 
+            border-bottom-color: #FF9500;
+            font-weight: 600; 
+        }
+        .nav-link:not(.active-main-nav):hover {
+            color: #ffffff; 
+            border-bottom-color: rgba(255, 149, 0, 0.5); 
+        }
+        
+        .content-card { 
+            background-color: rgba(17, 24, 39, 0.9); 
+            backdrop-filter: blur(12px); 
+            border-radius: 0.75rem; 
+            padding: 1.25rem; 
+            box-shadow: 0 12px 24px -8px rgba(0,0,0,0.6); 
+            border: 1px solid rgba(255, 255, 255, 0.07); 
+        }
+         @media (min-width: 640px) {
+            .content-card {
+                padding: 1.75rem; 
+            }
+        }
+
+        .header-card { 
+             background-color: rgba(10, 10, 20, 0.95); 
+             backdrop-filter: blur(14px); 
+             border-bottom: 1px solid rgba(255,255,255,0.06); 
+        }
+
+        .product-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background-color: rgba(23, 31, 48, 0.88); 
+        }
+        .product-card:hover {
+            transform: translateY(-7px) scale(1.01); 
+            box-shadow: 0 18px 35px -12px rgba(0,0,0,0.7);
+        }
+        .product-image-container {
+            background-color: rgba(255,255,255,0.04); 
+            aspect-ratio: 1 / 1; 
+            border-radius: 0.5rem; 
+            overflow: hidden; 
+            transition: transform 0.3s ease;
+        }
+        .product-card:hover .product-image-container {
+            transform: scale(1.03);
+        }
+        .product-image-container img {
+            transition: opacity 0.3s ease;
+        }
+        .product-card:hover .product-image-container img {
+            opacity: 0.95;
+        }
+
+        .cart-modal-item {
+            border-bottom: 1px solid #374151; 
+        }
+        .cart-modal-item:last-child {
+            border-bottom: none;
+        }
+        .filter-select {
+            background-color: #1f2937; 
+            color: #e0e7ff;
+            border: 1px solid #374151; 
+            border-radius: 0.5rem;
+            padding: 0.6rem 0.8rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .filter-select:focus {
+            outline: none;
+            border-color: #5856D6; 
+            box-shadow: 0 0 0 2px rgba(88, 86, 214, 0.3);
+        }
+
+        /* Cart Icon Animations */
+        @keyframes spinCartIcon {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+        .cart-icon-spin svg {
+            animation: spinCartIcon 0.6s ease-in-out;
+        }
+        @keyframes pulseCartCount {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7); } /* Indigo color for pulse */
+            50% { transform: scale(1.4); box-shadow: 0 0 0 8px rgba(99, 102, 241, 0); } /* Wider pulse */
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+        }
+        .cart-count-pulse {
+            animation: pulseCartCount 0.6s ease-in-out; /* Slightly longer pulse */
+        }
+
+
+        /* Smoke Effect */
+        .smoke-particle {
+            position: fixed; 
+            background-color: rgba(230, 230, 230, 0.55); 
+            border-radius: 50%;
+            pointer-events: none;
+            animation: smokeAnimation 1.3s ease-out forwards; 
+            opacity: 0; 
+            z-index: 2000; 
+        }
+
+        @keyframes smokeAnimation {
+            0% {
+                transform: scale(0.7) translate(0, 0); 
+                opacity: 0.95; 
+            }
+            100% {
+                transform: scale(2.8) translate(var(--tx, 0px), var(--ty, -80px)); 
+                opacity: 0;
+            }
+        }
+        
+        /* Modal Input Styling */
+        .modal-input {
+            background-color: #374151; /* slate-700 */
+            color: #e0e7ff;
+            border: 1px solid #4b5563; /* slate-600 */
+            border-radius: 0.375rem; /* rounded-md */
+            padding: 0.5rem 0.75rem;
+            width: 100%;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .modal-input:focus {
+            outline: none;
+            border-color: #5856D6; /* Indigo */
+            box-shadow: 0 0 0 2px rgba(88, 86, 214, 0.3);
+        }
+        .modal-textarea {
+            min-height: 80px;
+        }
+        .checkout-details-error {
+            color: #f87171; /* red-400 */
+            font-size: 0.875rem; /* text-sm */
+            margin-top: 0.25rem;
+        }
+
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <header class="header-card shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3 sm:space-x-4">
+                <a href="index.html"> 
+                    <img src="NixFix.jpg" alt="NicFix Logo" class="h-10 sm:h-12 w-auto rounded-md" onerror="this.outerHTML = `<div class='h-10 sm:h-12 w-24 flex-shrink-0 items-center justify-center border-2 border-dashed border-gray-600 rounded-md bg-gray-700/50 text-gray-400 text-xs p-2 text-center leading-tight shadow-inner'>Logo Not Found:<br>NicFix.jpg</div>`; console.error('Logo not found: NicFix.jpg. Please ensure the image file is in the correct path.');">
+                </a>
+                <a href="index.html" class="text-2xl sm:text-3xl font-extrabold rainbow-text">NicFix</a>
+            </div>
+            <nav>
+                <ul class="flex space-x-3 sm:space-x-6 items-center">
+                    <li><a href="index.html" class="nav-link text-sm sm:text-base">Home</a></li>
+                    <li><a href="Shop.html" class="nav-link text-sm sm:text-base active-main-nav">Shop</a></li> 
+                    <li><a href="Social.html" class="nav-link text-sm sm:text-base">Social</a></li>
+                    <li>
+                        <a href="#" id="cartLink" class="relative text-gray-400 hover:text-white transition-colors p-2 rounded-full hover:bg-gray-700/50" title="Shopping Cart">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                            <span id="cartItemCount" class="absolute -top-1 -right-1 text-xs bg-indigo-500 text-white rounded-full px-1.5 py-0.5 min-w-[18px] text-center font-semibold">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 py-10 md:py-12 lg:py-16 flex-grow">
+        <div class="text-center mb-10 md:mb-14">
+            <h1 class="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-blue-400 to-purple-500">Discover Our Collection</h1>
+            <p class="text-lg sm:text-xl text-indigo-200 mt-3 max-w-2xl mx-auto">Premium vapes, exceptional flavors. Your next fix awaits.</p>
+        </div>
+
+        <div class="mb-8 p-4 content-card rounded-lg">
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+                <h2 class="text-xl sm:text-2xl font-semibold text-gray-100">Browse Products</h2>
+                <div class="flex items-center space-x-3">
+                    <label for="sortProducts" class="text-sm text-gray-300">Sort by:</label>
+                    <select id="sortProducts" name="sortProducts" class="filter-select text-sm">
+                        <option value="featured">Featured</option>
+                        <option value="price_asc">Price: Low to High</option>
+                        <option value="price_desc">Price: High to Low</option>
+                        <option value="newest">Newest Arrivals</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8" id="productGrid">
+            </div>
+    </main>
+
+    <footer class="bg-black/90 py-10 text-center border-t border-gray-700/50 mt-auto"> 
+        <p class="text-gray-200 text-lg">&copy; <span id="currentYear"></span> <span class="font-bold rainbow-text">NicFix</span>. All rights reserved.</p>
+        <p class="text-sm text-gray-400 mt-3 px-4">Based in Springs, Gauteng, South Africa. Responsible vaping is advised. Products are for adult use only (18+).</p>
+    </footer>
+
+    <div id="cartModal" class="fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm flex items-center justify-center z-[1000] hidden p-4 transition-opacity duration-300 ease-in-out opacity-0">
+        <div class="bg-slate-800 p-5 sm:p-6 rounded-xl shadow-2xl w-full max-w-md md:max-w-lg max-h-[90vh] flex flex-col border border-slate-700 transform transition-all duration-300 ease-in-out scale-95 opacity-0" id="cartModalContent">
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-600">
+                <h2 class="text-xl sm:text-2xl font-semibold text-white">Your Shopping Cart</h2>
+                <button id="closeCartModalBtn" class="text-gray-400 hover:text-red-400 transition-colors p-1 rounded-md text-2xl leading-none">&times;</button>
+            </div>
+            <div id="cartModalBody" class="flex-grow overflow-y-auto mb-4 pr-1 space-y-3">
+                <p id="emptyCartMessage" class="text-gray-400 text-center py-8 text-sm">Your cart is currently empty. Start shopping!</p>
+            </div>
+            <div class="border-t border-slate-600 pt-4 space-y-3">
+                <div class="flex justify-between items-center">
+                    <p class="text-md sm:text-lg text-gray-200 font-medium">Subtotal:</p>
+                    <p id="cartTotal" class="text-md sm:text-lg text-white font-semibold">R0.00</p>
+                </div>
+                <button id="proceedToCheckoutDetailsBtn" class="w-full rainbow-button btn-green text-sm sm:text-base py-2.5">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="checkoutDetailsModal" class="fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm flex items-center justify-center z-[1001] hidden p-4 transition-opacity duration-300 ease-in-out opacity-0">
+        <div class="bg-slate-800 p-5 sm:p-6 rounded-xl shadow-2xl w-full max-w-md md:max-w-lg max-h-[90vh] flex flex-col border border-slate-700 transform transition-all duration-300 ease-in-out scale-95 opacity-0" id="checkoutDetailsModalContent">
+            <div class="flex justify-between items-center mb-6 pb-3 border-b border-slate-600">
+                <h2 class="text-xl sm:text-2xl font-semibold text-white">Delivery & Contact Details</h2>
+                <button id="closeCheckoutDetailsModalBtn" class="text-gray-400 hover:text-red-400 transition-colors p-1 rounded-md text-2xl leading-none">&times;</button>
+            </div>
+            <div class="flex-grow overflow-y-auto mb-4 pr-1 space-y-4">
+                <div>
+                    <label for="firstName" class="block text-sm font-medium text-indigo-200 mb-1">First Name</label>
+                    <input type="text" id="firstName" name="firstName" class="modal-input" placeholder="e.g., John">
+                    <p id="firstNameError" class="checkout-details-error hidden">First name is required.</p>
+                </div>
+                <div>
+                    <label for="surname" class="block text-sm font-medium text-indigo-200 mb-1">Surname</label>
+                    <input type="text" id="surname" name="surname" class="modal-input" placeholder="e.g., Doe">
+                    <p id="surnameError" class="checkout-details-error hidden">Surname is required.</p>
+                </div>
+                <div>
+                    <label for="address" class="block text-sm font-medium text-indigo-200 mb-1">Delivery Address</label>
+                    <textarea id="address" name="address" rows="3" class="modal-input modal-textarea" placeholder="e.g., 123 Vape Street, Springs, Gauteng"></textarea>
+                    <p id="addressError" class="checkout-details-error hidden">Delivery address is required.</p>
+                </div>
+                <div>
+                    <label for="phone" class="block text-sm font-medium text-indigo-200 mb-1">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" class="modal-input" placeholder="e.g., 0821234567">
+                    <p id="phoneError" class="checkout-details-error hidden">Phone number is required.</p>
+                </div>
+            </div>
+            <div class="border-t border-slate-600 pt-4 space-y-3">
+                 <p id="checkoutFormError" class="checkout-details-error text-center hidden">Please fill in all required fields.</p>
+                <div class="flex space-x-3">
+                    <button id="backToCartBtn" class="w-1/2 rainbow-button btn-orange text-sm sm:text-base py-2.5">Back to Cart</button>
+                    <button id="confirmOrderBtn" class="w-1/2 rainbow-button btn-green text-sm sm:text-base py-2.5">Confirm & Email</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let cart = JSON.parse(sessionStorage.getItem('nicfixCart')) || [];
+            
+            const initialProducts = [
+                { id: 1, name: "VAPORESSO XROS 4 MINI", description: "Refillable Pod System", details: "3ml Pod Capacity", price: 440.00, image: "https://vaporesso24.ru/wp-content/uploads/2024/05/XROS4MINI-black.png", colorClass: "btn-indigo", textColorClass: "text-purple-300" },
+                { id: 2, name: "Solobar S10000 - Apple Smoothies", description: "Flavor: Apple Smoothies", details: "10000 Puffs", price: 180.00, image: "https://bhikaimports.co.za/wp-content/uploads/2024/04/Apple-Smoothies.png", colorClass: "btn-green", textColorClass: "text-green-300" },
+                { id: 3, name: "Solobar S10000 - Lady Killer", description: "Flavor: Lady Killer", details: "10000 Puffs", price: 180.00, image: "https://bhikaimports.co.za/wp-content/uploads/2024/04/Lady-Killer.png", colorClass: "btn-yellow", textColorClass: "text-yellow-300" },
+                { id: 4, name: "Solobar S10000 - Watermelon Strawberry", description: "Flavor: Watermelon Strawberry Freeze", details: "10000 Puffs", price: 180.00, image: "https://bhikaimports.co.za/wp-content/uploads/2024/04/Strawberry-Watermelon-Freeze.png", colorClass: "btn-red", textColorClass: "text-red-300" },
+                { id: 5, name: "Solobar S10000 - Blue Cherry Dragon Fruit", description: "Flavor: Blue Cherry Dragon Fruit", details: "10000 Puffs", price: 180.00, image: "https://bhikaimports.co.za/wp-content/uploads/2024/04/Blue-Cherry-Dragon-Fruit.png", colorClass: "btn-blue", textColorClass: "text-blue-300" },
+                { id: 6, name: "Solobar S10000 - Cherry Sparkling Juice", description: "Flavor: Cherry Sparkling Juice", details: "10000 Puffs", price: 180.00, image: "https://bhikaimports.co.za/wp-content/uploads/2024/04/Cherry-Sparkling-Juice.png", colorClass: "btn-pink", textColorClass: "text-pink-300" },
+                { id: 7, name: "SMOK AIRPEN", description: "Compact Pod Device", details: "Pen-style Vape", price: 210.00, image: "https://www.lca-distribution.com/44558-thickbox_default/kit-airpen-1100mah-smoktech.jpg", colorClass: "btn-orange", textColorClass: "text-orange-300" },
+                { id: 8, name: "VOZOL VISTA 20000", description: "Rechargeable Vape Bar", details: "20000 Puffs", price: 285.00, image: "https://th.bing.com/th/id/OIP.MosHnR5U6rz2jVnvmFlmxAHaHa?cb=iwp2&rs=1&pid=ImgDetMain", colorClass: "btn-violet", textColorClass: "text-violet-300" },
+                { id: 9, name: "VAPORESSO XROS PRO POD KIT", description: "Advanced Pod Kit", details: "Professional Grade", price: 530.00, image: "https://th.bing.com/th/id/OIP.xW1o5giYZ10O8F3uMZxcbwHaHa?cb=iwp2&rs=1&pid=ImgDetMain", colorClass: "btn-teal", textColorClass: "text-teal-300" },
+                { id: 10, name: "NASTY RECHARGEABLE BAR 16000", description: "Rechargeable Bar 50MG", details: "16000 Puffs", price: 240.00, image: "https://wickedimports.co.za/wp-content/uploads/2024/02/Cola-Ice.png", colorClass: "btn-rose", textColorClass: "text-rose-300" },
+                { id: 11, name: "IQOS ILUMA ONE KIT", description: "Heated Tobacco Device", details: "All-in-one Design", price: 460.00, image: "https://cdn.public.steam-time.de/images/org/Iqos-Iluma-One-_0000_Galerie.jpg", colorClass: "btn-indigo", textColorClass: "text-indigo-300" },
+                { id: 12, name: "WICKED JUICE LONGFILL", description: "E-Liquid Concentrate", details: "Add Your Own Nicotine", price: 92.00, image: "https://www.vapoter.fr/images/products/p_46003-31088-wicked-haze-longfill-nasty-juice-20ml-00mg.jpg", colorClass: "btn-lime", textColorClass: "text-lime-300" },
+                { id: 13, name: "VAPENGIN CERES RECHARGEABLE BAR", description: "Rechargeable Disposable", details: "High Puff Count", price: 305.00, image: "https://wickedimports.co.za/wp-content/uploads/2024/12/Vapengin-Ceres-400x400.png", colorClass: "btn-yellow", textColorClass: "text-yellow-400" },
+                { id: 14, name: "ELFBAR RECHARGEABLE POD KIT", description: "Rechargeable Pod System", details: "Popular & Reliable", price: 250.00, image: "https://wildfirevape.co.uk/wp-content/uploads/2022/10/elfa-pod-kit-reusable-elf-bar.jpg", colorClass: "btn-pink", textColorClass: "text-pink-400" },
+                { id: 15, name: "SMOK NOVO PRO POD KIT", description: "Advanced Pod System", details: "Feature-Rich", price: 400.00, image: "https://th.bing.com/th/id/R.d6924467680906af3aae2be80e351ca4?rik=zgptB6iw0CS6Tg&riu=http%3a%2f%2fwww.ecigwizard.com%2fcdn%2fshop%2ffiles%2fsmok-novo-pro-kit-black-carbon-fibre_1024x1024.png%3fv%3d1704284610&ehk=1f0WLkbgl9GGVw9liE1A37gwwyXv%2b8y%2biW6Cf5uY6Z4%3d&risl=&pid=ImgRaw&r=0", colorClass: "btn-cyan", textColorClass: "text-cyan-300" },
+                { id: 16, name: "VAPENGIN RECHARGEBALE BAR 8500", description: "Rechargeable Bar 50MG", details: "8500 Puffs", price: 130.00, image: "https://wickedimports.co.za/wp-content/uploads/2024/03/Strawberry-Banana-Smoothie-800x800.png", colorClass: "btn-green", textColorClass: "text-green-400" },
+                { id: 17, name: "HELLVAPE DISPOSABLE POD 5000", description: "Disposable Pod 20MG", details: "5000 Puffs", price: 110.00, image: "https://www.losvapos.co.za/wp-content/uploads/2023/11/Los-Vapos-Hellvape-P1-5000-Puffs-Disposable-Flavour-Pod-20mg.jpg", colorClass: "btn-red", textColorClass: "text-red-400" },
+                { id: 18, name: "VAPORESSO XROS 3 MINI POD KIT", description: "Compact Pod Kit", details: "Reliable & Sleek", price: 380.00, image: "https://www.3mvcdmx.com/wp-content/uploads/2023/04/vaporesso-xros-3-mini-pod-kit-navy-blue.jpg", colorClass: "btn-indigo", textColorClass: "text-indigo-400" },
+                { id: 19, name: "SMOK NOVO POD KIT", description: "Classic Pod System", details: "Compact & Easy to Use", price: 190.00, image: "https://cdn10.bigcommerce.com/s-fi8xpl/products/884/images/3872/smok-novo-pod-vape-kit__28118.1553167831.1280.1280.JPG?c=2", colorClass: "btn-pink", textColorClass: "text-pink-400" },
+                { id: 20, name: "ONE CLOUD TUGBOAT POD KIT", description: "Pod System", details: "Durable Build", price: 280.00, image: "https://media.takealot.com/covers_images/50db468b259140cbbd89f151f6054b1a/s-zoom.file", colorClass: "btn-sky", textColorClass: "text-sky-400" },
+                { id: 21, name: "VAPORESSO XROS 4 MINI POD KIT ART EDITION", description: "Vaporesso Pod Kit", details: "Special Edition Design", price: 425.00, image: "https://thevapestudio.co.za/cdn/shop/files/VaporessoXROS4MiniArtEditionPodKitCamoStar1.jpg?v=1731583040&width=990", colorClass: "btn-violet", textColorClass: "text-purple-400" },
+                { id: 22, name: "VOOM RECHARGEABLE BAR 1200 PLUS", description: "Rechargeable Disposable", details: "~1200 Puffs", price: 215.00, image: "https://arenatobacco.com/wp-content/uploads/Peach-ice.png", colorClass: "btn-cyan", textColorClass: "text-cyan-400" },
+                { id: 23, name: "ELF RECHARGEABLE VAPE BAR- ICE KING", description: "Rechargeable Vape Bar", details: "Cooling Flavors", price: 310.00, image: "https://www.expresstabacaria.com.br/timthumb.php?src=image/catalog/pod/poddescartavel/elfbar/40kice/40kiceking.png&w=800=&h=800&zc=1", colorClass: "btn-blue", textColorClass: "text-blue-400" },
+                { id: 24, name: "ZLAND MINI RECHARGEABLE BATTERY", description: "Rechargeable Battery", details: "For ZLAND Mini Pods", price: 103.00, image: "https://th.bing.com/th/id/OIP.HwRUHfXq1Sk54Z5tEmKhxQHaHa?cb=iwp2&rs=1&pid=ImgDetMain", colorClass: "btn-amber", textColorClass: "text-amber-400" }
+            ];
+            let productsData = []; 
+
+
+            const productGridContainer = document.getElementById('productGrid');
+            const cartLink = document.getElementById('cartLink');
+            const cartModal = document.getElementById('cartModal');
+            const cartModalContent = document.getElementById('cartModalContent');
+            const closeCartModalBtn = document.getElementById('closeCartModalBtn');
+            const cartModalBody = document.getElementById('cartModalBody');
+            const cartTotalElement = document.getElementById('cartTotal');
+            const cartItemCountElement = document.getElementById('cartItemCount');
+            const proceedToCheckoutDetailsBtn = document.getElementById('proceedToCheckoutDetailsBtn'); 
+            const emptyCartMessage = document.getElementById('emptyCartMessage');
+            const sortSelect = document.getElementById('sortProducts');
+
+            // Checkout Details Modal Elements
+            const checkoutDetailsModal = document.getElementById('checkoutDetailsModal');
+            const checkoutDetailsModalContent = document.getElementById('checkoutDetailsModalContent');
+            const closeCheckoutDetailsModalBtn = document.getElementById('closeCheckoutDetailsModalBtn');
+            const backToCartBtn = document.getElementById('backToCartBtn');
+            const confirmOrderBtn = document.getElementById('confirmOrderBtn');
+            const firstNameInput = document.getElementById('firstName');
+            const surnameInput = document.getElementById('surname');
+            const addressInput = document.getElementById('address');
+            const phoneInput = document.getElementById('phone');
+            const checkoutFormError = document.getElementById('checkoutFormError');
+
+
+            function renderProducts(productsToRender) {
+                productGridContainer.innerHTML = ''; 
+                productsData = []; 
+
+                productsToRender.forEach((product, index) => {
+                    const productCard = document.createElement('div');
+                    productCard.className = 'content-card product-card';
+                    productCard.innerHTML = `
+                        <div class="flex-grow">
+                            <div class="product-image-container rounded-md overflow-hidden mb-4">
+                                <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400/334155/e2e8f0?text=Image+Not+Found'; this.alt='Image not available';">
+                            </div>
+                            <h3 class="text-lg sm:text-xl font-semibold text-gray-50 mb-1">${product.name}</h3>
+                            <p class="text-sm ${product.textColorClass} mb-1">${product.description}</p>
+                            <p class="text-xs text-gray-400 mb-3">${product.details}</p>
+                        </div>
+                        <div class="mt-4">
+                            <p class="text-xl sm:text-2xl font-bold rainbow-text mb-3">R${product.price.toFixed(2)}</p>
+                            <button class="add-to-cart-btn rainbow-button ${product.colorClass} w-full text-sm" data-product-name="${product.name}" data-price="${product.price.toFixed(2)}">Add to Cart</button>
+                        </div>
+                    `;
+                    productGridContainer.appendChild(productCard);
+                    productsData.push({ ...product, element: productCard, initialOrder: index }); 
+                });
+                addEventListenersToCartButtons(); 
+            }
+
+
+            function updateCartDisplay() {
+                cartItemCountElement.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+                cartModalBody.innerHTML = ''; 
+                let total = 0;
+
+                if (cart.length === 0) {
+                    cartModalBody.appendChild(emptyCartMessage); 
+                    emptyCartMessage.style.display = 'block';
+                     proceedToCheckoutDetailsBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                } else {
+                    emptyCartMessage.style.display = 'none';
+                    proceedToCheckoutDetailsBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    cart.forEach((item, index) => {
+                        const itemElement = document.createElement('div');
+                        itemElement.classList.add('cart-modal-item', 'py-2.5', 'flex', 'justify-between', 'items-center', 'gap-3');
+                        itemElement.innerHTML = `
+                            <div class="flex-grow min-w-0">
+                                <p class="text-white text-sm font-medium truncate" title="${item.name}">${item.name}</p>
+                                <p class="text-purple-300 text-xs">R${item.price.toFixed(2)} x ${item.quantity}</p>
+                            </div>
+                            <p class="text-gray-200 text-sm font-semibold whitespace-nowrap">R${(item.price * item.quantity).toFixed(2)}</p>
+                            <button class="remove-from-cart-btn text-red-400 hover:text-red-500 text-lg p-1 rounded-md transition-colors" data-index="${index}" title="Remove item">&times;</button>
+                        `;
+                        cartModalBody.appendChild(itemElement);
+                        total += item.price * item.quantity;
+                    });
+                }
+                
+                cartTotalElement.textContent = `R${total.toFixed(2)}`;
+                sessionStorage.setItem('nicfixCart', JSON.stringify(cart));
+            }
+            
+            updateCartDisplay();
+            
+            function createSmokeEffect(button) {
+                const rect = button.getBoundingClientRect();
+                const buttonCenterX = rect.left + rect.width / 2;
+                const buttonCenterY = rect.top + rect.height / 2;
+            
+                for (let i = 0; i < 15; i++) { 
+                    const particle = document.createElement('div');
+                    particle.classList.add('smoke-particle');
+                    document.body.appendChild(particle); 
+            
+                    const size = Math.random() * 20 + 8; 
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    
+                    particle.style.left = `${buttonCenterX - size / 2 + (Math.random() - 0.5) * 30}px`; 
+                    particle.style.top = `${buttonCenterY - size / 2 + (Math.random() - 0.5) * 15}px`;
+                    
+                    const angle = Math.random() * Math.PI * 2; 
+                    const distance = Math.random() * 60 + 30; 
+                    particle.style.setProperty('--tx', `${Math.cos(angle) * distance}px`);
+                    particle.style.setProperty('--ty', `${Math.sin(angle) * distance - 70}px`); 
+            
+                    particle.addEventListener('animationend', () => {
+                        particle.remove();
+                    });
+                }
+            
+                if(cartLink){
+                    const svgIcon = cartLink.querySelector('svg');
+                    if (svgIcon) { 
+                        svgIcon.parentElement.classList.add('cart-icon-spin'); 
+                    }
+                    cartItemCountElement.classList.add('cart-count-pulse');
+                    setTimeout(() => {
+                        if (svgIcon) svgIcon.parentElement.classList.remove('cart-icon-spin');
+                        cartItemCountElement.classList.remove('cart-count-pulse');
+                    }, 600); 
+                }
+            }
+
+            function addEventListenersToCartButtons() {
+                const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+                addToCartButtons.forEach(button => {
+                    button.replaceWith(button.cloneNode(true)); 
+                });
+                document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+                    button.addEventListener('click', () => {
+                        const productName = button.getAttribute('data-product-name');
+                        const productPrice = parseFloat(button.getAttribute('data-price'));
+                        const existingItem = cart.find(item => item.name === productName);
+
+                        if (existingItem) {
+                            existingItem.quantity += 1;
+                        } else {
+                            cart.push({ name: productName, price: productPrice, quantity: 1 });
+                        }
+                        updateCartDisplay();
+                        createSmokeEffect(button); 
+
+                        const originalText = button.textContent;
+                        const originalBg = button.style.backgroundColor; 
+                        const originalClasses = Array.from(button.classList);
+
+                        button.textContent = 'Added!';
+                        originalClasses.forEach(cls => {
+                            if (cls.startsWith('btn-') && cls !== 'btn-green') {
+                                button.classList.remove(cls);
+                            }
+                        });
+                        button.style.backgroundColor = ''; 
+                        button.classList.add('btn-green'); 
+
+                        setTimeout(() => {
+                            button.textContent = originalText;
+                            button.classList.remove('btn-green');
+                            originalClasses.forEach(cls => {
+                                if(cls.startsWith('btn-') || cls === 'rainbow-button' || cls === 'w-full' || cls === 'text-sm' || cls === 'add-to-cart-btn') {
+                                    if (!button.classList.contains(cls)) { 
+                                       button.classList.add(cls);
+                                    }
+                                }
+                            });
+                            if (originalBg) button.style.backgroundColor = originalBg; 
+                            else if (!originalClasses.some(c => c.startsWith('btn-'))) { 
+                                 button.classList.forEach(c => { if(c.startsWith('btn-')) button.classList.remove(c); });
+                            }
+                        }, 1500);
+                    });
+                });
+            }
+            
+            renderProducts(initialProducts);
+
+
+            cartModalBody.addEventListener('click', (event) => {
+                if (event.target.classList.contains('remove-from-cart-btn') || event.target.closest('.remove-from-cart-btn')) {
+                    const button = event.target.closest('.remove-from-cart-btn');
+                    const itemIndex = parseInt(button.getAttribute('data-index'));
+                    cart.splice(itemIndex, 1); 
+                    updateCartDisplay(); 
+                }
+            });
+            
+            function openModal(modalElement, modalContentElement) {
+                modalElement.classList.remove('hidden');
+                setTimeout(() => { 
+                    modalElement.classList.remove('opacity-0');
+                    modalContentElement.classList.remove('scale-95', 'opacity-0');
+                }, 10);
+            }
+
+            function closeModal(modalElement, modalContentElement) {
+                modalElement.classList.add('opacity-0');
+                modalContentElement.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    modalElement.classList.add('hidden');
+                }, 300); 
+            }
+
+            if (cartLink) {
+                cartLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    updateCartDisplay(); 
+                    openModal(cartModal, cartModalContent);
+                });
+            }
+            if (closeCartModalBtn) {
+                closeCartModalBtn.addEventListener('click', () => closeModal(cartModal, cartModalContent));
+            }
+            cartModal.addEventListener('click', (event) => {
+                if (event.target === cartModal) { 
+                    closeModal(cartModal, cartModalContent);
+                }
+            });
+
+            // Checkout Details Modal Logic
+            if (proceedToCheckoutDetailsBtn) {
+                proceedToCheckoutDetailsBtn.addEventListener('click', () => {
+                    if (cart.length === 0) return; 
+                    closeModal(cartModal, cartModalContent);
+                    openModal(checkoutDetailsModal, checkoutDetailsModalContent);
+                });
+            }
+
+            if (closeCheckoutDetailsModalBtn) {
+                closeCheckoutDetailsModalBtn.addEventListener('click', () => closeModal(checkoutDetailsModal, checkoutDetailsModalContent));
+            }
+            checkoutDetailsModal.addEventListener('click', (event) => {
+                if (event.target === checkoutDetailsModal) {
+                    closeModal(checkoutDetailsModal, checkoutDetailsModalContent);
+                }
+            });
+            if (backToCartBtn) {
+                backToCartBtn.addEventListener('click', () => {
+                    closeModal(checkoutDetailsModal, checkoutDetailsModalContent);
+                    openModal(cartModal, cartModalContent);
+                });
+            }
+
+            if (confirmOrderBtn) {
+                confirmOrderBtn.addEventListener('click', () => {
+                    let isValid = true;
+                    checkoutFormError.classList.add('hidden');
+                    document.querySelectorAll('#checkoutDetailsModal .checkout-details-error').forEach(el => el.classList.add('hidden'));
+
+                    if (!firstNameInput.value.trim()) {
+                        document.getElementById('firstNameError').classList.remove('hidden');
+                        isValid = false;
+                    }
+                    if (!surnameInput.value.trim()) {
+                        document.getElementById('surnameError').classList.remove('hidden');
+                        isValid = false;
+                    }
+                    if (!addressInput.value.trim()) {
+                        document.getElementById('addressError').classList.remove('hidden');
+                        isValid = false;
+                    }
+                    if (!phoneInput.value.trim()) {
+                        document.getElementById('phoneError').classList.remove('hidden');
+                        isValid = false;
+                    }
+
+                    if (!isValid) {
+                        checkoutFormError.classList.remove('hidden');
+                        return;
+                    }
+                    
+                    let emailBody = "Hello NicFix Team,\n\nI would like to place an order for the following items:\n\n";
+                    emailBody += "CUSTOMER DETAILS:\n";
+                    emailBody += `Name: ${firstNameInput.value.trim()} ${surnameInput.value.trim()}\n`;
+                    emailBody += `Address: ${addressInput.value.trim()}\n`;
+                    emailBody += `Phone: ${phoneInput.value.trim()}\n\n`;
+                    emailBody += "ORDER ITEMS:\n";
+
+                    let totalAmount = 0;
+                    cart.forEach(item => {
+                        emailBody += `- ${item.name} (Quantity: ${item.quantity}) - Price: R${item.price.toFixed(2)} each - Subtotal: R${(item.price * item.quantity).toFixed(2)}\n`;
+                        totalAmount += item.price * item.quantity;
+                    });
+                    emailBody += `\n----------------------------------`;
+                    emailBody += `\nGRAND TOTAL: R${totalAmount.toFixed(2)}`;
+                    emailBody += "\n----------------------------------";
+                    emailBody += "\n\nPlease advise on payment methods and delivery options to Springs, Gauteng.";
+                    emailBody += "\n\nLooking forward to my NicFix!";
+                    emailBody += `\n\nKind regards,\n${firstNameInput.value.trim()} ${surnameInput.value.trim()}`;
+
+
+                    const mailtoLink = `mailto:nalydnetsrak@gmail.com?subject=${encodeURIComponent('New Vape Order from NicFix Website')}&body=${encodeURIComponent(emailBody)}`;
+                    
+                    window.location.href = mailtoLink;
+
+                    cart = [];
+                    updateCartDisplay();
+                    sessionStorage.removeItem('nicfixCart');
+                    
+                    firstNameInput.value = '';
+                    surnameInput.value = '';
+                    addressInput.value = '';
+                    phoneInput.value = '';
+                    
+                    setTimeout(() => { 
+                        closeModal(checkoutDetailsModal, checkoutDetailsModalContent);
+                    }, 500);
+                });
+            }
+            
+            sortSelect.addEventListener('change', (event) => {
+                const sortBy = event.target.value;
+                let productsToSort = [...productsData]; 
+
+                if (sortBy === 'price_asc') {
+                    productsToSort.sort((a, b) => a.price - b.price);
+                } else if (sortBy === 'price_desc') {
+                    productsToSort.sort((a, b) => b.price - a.price);
+                } else if (sortBy === 'newest' || sortBy === 'featured') { 
+                    productsToSort.sort((a, b) => a.initialOrder - b.initialOrder);
+                }
+                
+                productGridContainer.innerHTML = ''; 
+                productsToSort.forEach(p => {
+                    productGridContainer.appendChild(p.element);
+                });
+                addEventListenersToCartButtons(); 
+            });
+
+
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+        });
+    </script>
+
+</body>
+</html>
