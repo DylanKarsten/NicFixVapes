@@ -10,44 +10,43 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(-45deg, #1e3a8a, #3b82f6, #60a5fa, #93c5fd, #bfdbfe, #dbeafe, #eff6ff); /* Professional Blue Gradient */
-            background-size: 300% 300%;
-            animation: professionalGradientBG 20s ease infinite;
-            color: #1f2937; /* Darker text for better contrast on light blue */
+            background: linear-gradient(-45deg, #FF0000, #FF7F00, #FFFF00, #00FF00, #0000FF, #4B0082, #8B00FF); /* RGB Animated Background */
+            background-size: 400% 400%;
+            animation: gradientBG 25s ease infinite;
+            color: #e0e7ff; /* Default light text color for RGB background */
         }
 
-        @keyframes professionalGradientBG {
+        @keyframes gradientBG { /* Original RGB Animation */
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
         
         .header-card { 
-             background-color: rgba(255, 255, 255, 0.85); /* Lighter header for blue bg */
-             backdrop-filter: blur(14px); 
-             border-bottom: 1px solid rgba(59, 130, 246, 0.2); /* Blueish border */
-             box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.08);
+             background-color: rgba(10, 10, 20, 0.92); /* Dark header from shop */
+             backdrop-filter: blur(12px); 
+             border-bottom: 1px solid rgba(255,255,255,0.05); 
         }
 
         .nav-link {
-            text-decoration: none; color: #374151; /* Darker nav links */
+            text-decoration: none; color: #c7d2fe; 
             padding-bottom: 0.4rem; 
             transition: color 0.25s ease-in-out, border-color 0.25s ease-in-out;
             border-bottom: 3px solid transparent; 
             font-weight: 500; 
         }
         .nav-link.active-main-nav { 
-            color: #2563eb; /* Stronger blue for active link */
-            border-bottom-color: #2563eb;
-            font-weight: 700; 
+            color: #FF9500; 
+            border-bottom-color: #FF9500;
+            font-weight: 600; 
         }
         .nav-link:not(.active-main-nav):hover {
-            color: #1d4ed8; 
-            border-bottom-color: rgba(37, 99, 235, 0.4); 
+            color: #ffffff; 
+            border-bottom-color: rgba(255, 149, 0, 0.5); 
         }
 
-        .rainbow-text { /* Adjusted for better visibility on blue, can be toned down or removed if preferred */
-            background: linear-gradient(to right, #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #8b5cf6, #d946ef);
+        .rainbow-text {
+            background: linear-gradient(to right, #FF0000, #FF7F00, #FFFF00, #00FF00, #0000FF, #4B0082, #8B00FF);
             -webkit-background-clip: text; background-clip: text; color: transparent;
             animation: rainbowTextAnimation 10s linear infinite;
             background-size: 200% 200%;
@@ -58,15 +57,14 @@
             100% { background-position: 0% 50%; }
         }
 
-
-        .content-card { 
-            background-color: rgba(255, 255, 255, 0.9); /* Lighter cards */
-            backdrop-filter: blur(10px); 
+        .content-card { /* Style from shop page for consistency */
+            background-color: rgba(17, 24, 39, 0.9); 
+            backdrop-filter: blur(12px); 
             border-radius: 0.75rem; 
             padding: 1.5rem; 
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(59, 130, 246, 0.15); 
-            color: #1f2937; /* Dark text on cards */
+            box-shadow: 0 12px 24px -8px rgba(0,0,0,0.6); 
+            border: 1px solid rgba(255, 255, 255, 0.07); 
+            color: #e0e7ff; /* Light text for dark cards */
         }
          @media (min-width: 640px) {
             .content-card {
@@ -78,40 +76,90 @@
         }
         .social-card:hover {
             transform: translateY(-6px) scale(1.02);
-            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 15px 30px -10px rgba(0,0,0,0.7); /* Enhanced shadow on hover */
         }
         .social-icon {
             transition: transform 0.3s ease;
         }
         .social-card:hover .social-icon {
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(-5deg); /* Slight rotation for fun */
         }
 
-        .primary-button {
-            background-color: #2563eb; /* Primary blue */
-            color: white;
-            font-weight: 600;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            transition: background-color 0.2s ease, transform 0.2s ease;
-            display: inline-flex; /* For icon alignment */
+        /* Reusing rainbow-button style from shop for social links */
+        .rainbow-button {
+            color: white; font-weight: 600; 
+            padding: 0.75rem 1.5rem; 
+            border-radius: 0.5rem; 
+            transition: all 0.2s ease-in-out; 
+            box-shadow: 0 4px 8px -1px rgba(0,0,0,0.2), 0 2px 6px -2px rgba(0,0,0,0.15); 
+            border: none;
+            display: inline-flex; 
             align-items: center;
             justify-content: center;
             text-decoration: none;
         }
-        .primary-button:hover {
-            background-color: #1d4ed8; /* Darker blue on hover */
-            transform: translateY(-1px);
+        .rainbow-button:hover {
+            transform: translateY(-2px) scale(1.02); 
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.25), 0 4px 8px -2px rgba(0,0,0,0.2); 
         }
-        .primary-button i {
+        .rainbow-button:active {
+            transform: translateY(0px) scale(0.98); 
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3), 0 1px 2px 0 rgba(0,0,0,0.1); 
+        }
+        .rainbow-button i {
             margin-right: 0.5rem;
         }
 
-        .footer-card {
-            background-color: rgba(17, 24, 39, 0.9); /* Dark footer for contrast */
+        /* Specific social button colors */
+        .btn-instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);}
+        .btn-instagram:hover { background: linear-gradient(45deg, #d9832b 0%, #cf5f35 25%, #c5223b 50%, #b81e5d 75%, #a9157c 100%);}
+        .btn-facebook { background-color: #1877F2; } .btn-facebook:hover { background-color: #166FE5; }
+        .btn-whatsapp { background-color: #25D366; } .btn-whatsapp:hover { background-color: #1DA851; }
+
+
+        .footer-card { /* Reusing dark footer style from shop */
+            background-color: rgba(10, 10, 20, 0.92);
             color: #e0e7ff;
-            border-top: 1px solid rgba(59, 130, 246, 0.2);
+            border-top: 1px solid rgba(255,255,255,0.05);
         }
+        /* Cart Icon Animations (from shop page) */
+        @keyframes spinCartIcon {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+        .cart-icon-spin svg {
+            animation: spinCartIcon 0.6s ease-in-out;
+        }
+        @keyframes pulseCartCount {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7); } 
+            50% { transform: scale(1.4); box-shadow: 0 0 0 8px rgba(99, 102, 241, 0); } 
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+        }
+        .cart-count-pulse {
+            animation: pulseCartCount 0.6s ease-in-out; 
+        }
+        /* Modal Input Styling (from shop page for cart modal) */
+        .modal-input {
+            background-color: #374151; 
+            color: #e0e7ff;
+            border: 1px solid #4b5563; 
+            border-radius: 0.375rem; 
+            padding: 0.5rem 0.75rem;
+            width: 100%;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .modal-input:focus {
+            outline: none;
+            border-color: #5856D6; 
+            box-shadow: 0 0 0 2px rgba(88, 86, 214, 0.3);
+        }
+        .checkout-details-error { /* For potential future use if forms are added here */
+            color: #f87171; 
+            font-size: 0.875rem; 
+            margin-top: 0.25rem;
+        }
+
 
     </style>
 </head>
@@ -121,7 +169,7 @@
         <div class="container mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
             <div class="flex items-center space-x-3 sm:space-x-4">
                 <a href="index.html"> 
-                    <img src="NixFix.jpg" alt="NicFix Logo" class="h-10 sm:h-12 w-auto rounded-md" onerror="this.outerHTML = `<div class='h-10 sm:h-12 w-24 flex-shrink-0 items-center justify-center border-2 border-dashed border-gray-400 rounded-md bg-gray-100 text-gray-500 text-xs p-2 text-center leading-tight shadow-inner'>Logo Not Found:<br>NicFix.jpg</div>`; console.error('Logo not found: NicFix.jpg. Please ensure the image file is in the correct path.');">
+                    <img src="NixFix.jpg" alt="NicFix Logo" class="h-10 sm:h-12 w-auto rounded-md" onerror="this.outerHTML = `<div class='h-10 sm:h-12 w-24 flex-shrink-0 items-center justify-center border-2 border-dashed border-gray-600 rounded-md bg-gray-700/50 text-gray-400 text-xs p-2 text-center leading-tight shadow-inner'>Logo Not Found:<br>NicFix.jpg</div>`; console.error('Logo not found: NicFix.jpg. Please ensure the image file is in the correct path.');">
                 </a>
                 <a href="index.html" class="text-2xl sm:text-3xl font-extrabold rainbow-text">NicFix</a>
             </div>
@@ -131,11 +179,11 @@
                     <li><a href="Shop.html" class="nav-link text-sm sm:text-base">Shop</a></li> 
                     <li><a href="Social.html" class="nav-link text-sm sm:text-base active-main-nav">Social</a></li>
                     <li>
-                        <a href="#" id="cartLink" class="relative text-slate-600 hover:text-blue-600 transition-colors p-2 rounded-full hover:bg-blue-100/50" title="Shopping Cart">
+                        <a href="#" id="cartLink" class="relative text-gray-400 hover:text-white transition-colors p-2 rounded-full hover:bg-gray-700/50" title="Shopping Cart">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                             </svg>
-                            <span id="cartItemCount" class="absolute -top-1 -right-1 text-xs bg-blue-600 text-white rounded-full px-1.5 py-0.5 min-w-[18px] text-center font-semibold">0</span>
+                            <span id="cartItemCount" class="absolute -top-1 -right-1 text-xs bg-indigo-500 text-white rounded-full px-1.5 py-0.5 min-w-[18px] text-center font-semibold">0</span>
                         </a>
                     </li>
                 </ul>
@@ -145,36 +193,36 @@
 
     <main class="container mx-auto px-4 sm:px-6 py-10 md:py-12 lg:py-16 flex-grow">
         <div class="text-center mb-10 md:mb-14">
-            <h1 class="text-4xl sm:text-5xl font-bold text-slate-800">Connect With NicFix</h1>
-            <p class="text-lg sm:text-xl text-slate-600 mt-3 max-w-2xl mx-auto">Stay updated with our latest products, offers, and vape culture. Follow us!</p>
+            <h1 class="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-red-400 to-yellow-400">Connect With NicFix</h1>
+            <p class="text-lg sm:text-xl text-indigo-200 mt-3 max-w-2xl mx-auto">Stay updated with our latest products, offers, and vape culture. Follow us!</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             <div class="content-card social-card text-center">
                 <i class="fab fa-instagram text-5xl sm:text-6xl mb-4 text-pink-500 social-icon"></i>
-                <h2 class="text-2xl sm:text-3xl font-semibold mb-3 text-slate-700">Instagram</h2>
-                <p class="text-slate-500 mb-6 text-sm sm:text-base">Follow us for stunning product shots, lifestyle content, and behind-the-scenes glimpses.</p>
-                <a href="https://www.instagram.com/nicfi.x?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="primary-button">
+                <h2 class="text-2xl sm:text-3xl font-semibold mb-3 text-gray-100">Instagram</h2>
+                <p class="text-gray-300 mb-6 text-sm sm:text-base">Follow us for stunning product shots, lifestyle content, and behind-the-scenes glimpses.</p>
+                <a href="https://www.instagram.com/nicfi.x?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="rainbow-button btn-instagram">
                     <i class="fab fa-instagram"></i> Follow @nicfi.x
                 </a>
             </div>
 
             <div class="content-card social-card text-center">
-                <i class="fab fa-facebook-square text-5xl sm:text-6xl mb-4 text-blue-600 social-icon"></i>
-                <h2 class="text-2xl sm:text-3xl font-semibold mb-3 text-slate-700">Facebook</h2>
-                <p class="text-slate-500 mb-6 text-sm sm:text-base">Join our community! Get updates, share your experiences, and connect with fellow vapers.</p>
-                <a href="https://www.facebook.com/profile.php?id=61575841928133" target="_blank" class="primary-button">
+                <i class="fab fa-facebook-square text-5xl sm:text-6xl mb-4 text-blue-500 social-icon"></i>
+                <h2 class="text-2xl sm:text-3xl font-semibold mb-3 text-gray-100">Facebook</h2>
+                <p class="text-gray-300 mb-6 text-sm sm:text-base">Join our community! Get updates, share your experiences, and connect with fellow vapers.</p>
+                <a href="https://www.facebook.com/profile.php?id=61575841928133" target="_blank" class="rainbow-button btn-facebook">
                      <i class="fab fa-facebook-square"></i> Like Our Page
                 </a>
             </div>
 
             <div class="content-card social-card text-center">
                 <i class="fab fa-whatsapp text-5xl sm:text-6xl mb-4 text-green-500 social-icon"></i>
-                <h2 class="text-2xl sm:text-3xl font-semibold mb-3 text-slate-700">WhatsApp</h2>
-                <p class="text-slate-500 mb-6 text-sm sm:text-base">Direct support & quick orders. Add us on WhatsApp for exclusive deals and instant assistance.</p>
-                <a href="https://wa.me/27658408880" target="_blank" class="primary-button"> <i class="fab fa-whatsapp"></i> Chat With Us
+                <h2 class="text-2xl sm:text-3xl font-semibold mb-3 text-gray-100">WhatsApp</h2>
+                <p class="text-gray-300 mb-6 text-sm sm:text-base">Direct support & quick orders. Add us on WhatsApp for exclusive deals and instant assistance.</p>
+                <a href="https://wa.me/27658408880" target="_blank" class="rainbow-button btn-whatsapp"> <i class="fab fa-whatsapp"></i> Chat With Us
                 </a>
-                 <p class="text-xs text-slate-400 mt-3">(+27 65 840 8880)</p>
+                 <p class="text-xs text-gray-400 mt-3">(+27 65 840 8880)</p>
             </div>
         </div>
     </main>
@@ -184,21 +232,21 @@
         <p class="text-xs sm:text-sm text-gray-400 mt-2 px-4">Based in Springs, Gauteng, South Africa. Responsible vaping is advised. Products are for adult use only (18+).</p>
     </footer>
 
-    <div id="cartModal" class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm flex items-center justify-center z-[1000] hidden p-4 transition-opacity duration-300 ease-in-out opacity-0">
-        <div class="bg-slate-900 p-5 sm:p-6 rounded-xl shadow-2xl w-full max-w-md md:max-w-lg max-h-[90vh] flex flex-col border border-slate-700 transform transition-all duration-300 ease-in-out scale-95 opacity-0" id="cartModalContent">
-            <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-700">
+    <div id="cartModal" class="fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm flex items-center justify-center z-[1000] hidden p-4 transition-opacity duration-300 ease-in-out opacity-0">
+        <div class="bg-slate-800 p-5 sm:p-6 rounded-xl shadow-2xl w-full max-w-md md:max-w-lg max-h-[90vh] flex flex-col border border-slate-700 transform transition-all duration-300 ease-in-out scale-95 opacity-0" id="cartModalContent">
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-600">
                 <h2 class="text-xl sm:text-2xl font-semibold text-white">Your Shopping Cart</h2>
                 <button id="closeCartModalBtn" class="text-gray-400 hover:text-red-400 transition-colors p-1 rounded-md text-2xl leading-none">&times;</button>
             </div>
             <div id="cartModalBody" class="flex-grow overflow-y-auto mb-4 pr-1 space-y-3">
                 <p id="emptyCartMessage" class="text-gray-400 text-center py-8 text-sm">Your cart is currently empty.</p>
             </div>
-            <div class="border-t border-slate-700 pt-4 space-y-3">
+            <div class="border-t border-slate-600 pt-4 space-y-3">
                 <div class="flex justify-between items-center">
                     <p class="text-md sm:text-lg text-gray-200 font-medium">Subtotal:</p>
                     <p id="cartTotal" class="text-md sm:text-lg text-white font-semibold">R0.00</p>
                 </div>
-                <button id="checkoutBtn" class="w-full primary-button bg-green-500 hover:bg-green-600 text-sm sm:text-base py-2.5">Proceed to Checkout</button>
+                <button id="checkoutBtn" class="w-full rainbow-button btn-green text-sm sm:text-base py-2.5">Proceed to Checkout</button>
             </div>
         </div>
     </div>
@@ -207,7 +255,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-            // Cart functionality (minimal version for social page, assuming cart is managed globally or primarily on shop page)
             let cart = JSON.parse(sessionStorage.getItem('nicfixCart')) || [];
             const cartLink = document.getElementById('cartLink');
             const cartModal = document.getElementById('cartModal');
@@ -216,13 +263,13 @@
             const cartModalBody = document.getElementById('cartModalBody');
             const cartTotalElement = document.getElementById('cartTotal');
             const cartItemCountElement = document.getElementById('cartItemCount');
-            const checkoutBtn = document.getElementById('checkoutBtn');
+            const checkoutBtn = document.getElementById('checkoutBtn'); // This is the button in the cart modal
             const emptyCartMessage = document.getElementById('emptyCartMessage');
 
             function updateCartIconCount() {
                 cartItemCountElement.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
             }
-             updateCartIconCount(); // Initial update
+             updateCartIconCount(); 
 
             function updateCartModalDisplay() {
                 updateCartIconCount();
@@ -230,9 +277,8 @@
                 let total = 0;
 
                 if (cart.length === 0) {
-                    // Ensure emptyCartMessage is cloned and appended if it's not already in cartModalBody
-                    if (!cartModalBody.contains(emptyCartMessage)) {
-                         cartModalBody.appendChild(emptyCartMessage.cloneNode(true));
+                    if (!cartModalBody.contains(emptyCartMessage)) { // Check if message is already there
+                         cartModalBody.appendChild(emptyCartMessage.cloneNode(true)); // Clone if not
                     }
                     const currentEmptyMsg = cartModalBody.querySelector('#emptyCartMessage');
                     if(currentEmptyMsg) currentEmptyMsg.style.display = 'block';
@@ -301,48 +347,28 @@
                 }
             });
             
+            // On the Social page, the "Proceed to Checkout" button in the cart modal
+            // should ideally redirect to the shop page's checkout process or just indicate an action.
+            // For now, it will just log a message and close the modal, as the detailed checkout form is on Shop.html.
             if (checkoutBtn) {
                 checkoutBtn.addEventListener('click', () => {
                     if (cart.length === 0) {
                         const tempMsg = document.createElement('p');
-                        tempMsg.textContent = 'Your cart is empty. Add some items first!';
+                        tempMsg.textContent = 'Your cart is empty. Please add items from the Shop page.';
                         tempMsg.className = 'text-yellow-400 text-center text-xs my-1';
                         const cartFooter = checkoutBtn.parentElement;
-                        if (cartFooter) { // Ensure cartFooter exists
+                        if (cartFooter) { 
                            cartFooter.insertBefore(tempMsg, cartFooter.firstChild);
                            setTimeout(() => tempMsg.remove(), 3000);
                         }
                         return;
                     }
-
-                    let emailBody = "Hello NicFix Team,\n\nI would like to place an order for the following items:\n\n";
-                    let totalAmount = 0;
-                    cart.forEach(item => {
-                        emailBody += `- ${item.name} (Quantity: ${item.quantity}) - Price: R${parseFloat(item.price).toFixed(2)} each - Subtotal: R${(parseFloat(item.price) * item.quantity).toFixed(2)}\n`;
-                        totalAmount += parseFloat(item.price) * item.quantity;
-                    });
-                    emailBody += `\n----------------------------------`;
-                    emailBody += `\nGRAND TOTAL: R${totalAmount.toFixed(2)}`;
-                    emailBody += "\n----------------------------------";
-                    emailBody += "\n\nPlease advise on payment methods and delivery options to Springs, Gauteng.";
-                    emailBody += "\n\nLooking forward to my NicFix!";
-                    emailBody += "\n\nKind regards,";
-                    emailBody += "\n[Your Name Here - Please Fill In]";
-
-                    const mailtoLink = `mailto:nalydnetsrak@gmail.com?subject=${encodeURIComponent('New Vape Order from NicFix Website')}&body=${encodeURIComponent(emailBody)}`;
-                    window.location.href = mailtoLink;
-
-                    cart = [];
-                    sessionStorage.removeItem('nicfixCart');
-                    updateCartModalDisplay();
-                    
-                    setTimeout(() => { 
-                        closeCartModal();
-                    }, 500);
+                    // Instead of direct email, guide user to shop page for full checkout.
+                    alert("Please proceed to the Shop page to complete your checkout with delivery details.");
+                    closeCartModal();
+                    // Optionally, redirect to shop page: window.location.href = 'Shop.html';
                 });
             }
-
-
         });
     </script>
 
