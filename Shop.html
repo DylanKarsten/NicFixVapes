@@ -9,13 +9,13 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(-45deg, #FF0000, #FF7F00, #FFFF00, #00FF00, #0000FF, #4B0082, #8B00FF);
+            background: linear-gradient(-45deg, #FF0000, #FF7F00, #FFFF00, #00FF00, #0000FF, #4B0082, #8B00FF); /* RGB Animated Background */
             background-size: 400% 400%;
             animation: gradientBG 25s ease infinite;
             color: #e0e7ff; 
         }
 
-        @keyframes gradientBG {
+        @keyframes gradientBG { /* Original RGB Animation */
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
@@ -25,8 +25,8 @@
             color: white; font-weight: 600; 
             padding: 0.75rem 1.5rem; 
             border-radius: 0.5rem; 
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); 
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1); 
+            transition: all 0.2s ease-in-out; 
+            box-shadow: 0 4px 8px -1px rgba(0,0,0,0.2), 0 2px 6px -2px rgba(0,0,0,0.15); 
             border: none;
             display: inline-block;
             text-align: center;
@@ -34,14 +34,15 @@
             overflow: hidden; 
         }
         .rainbow-button:hover {
-            transform: translateY(-2px) scale(1.01); 
-            box-shadow: 0 8px 12px -3px rgba(0,0,0,0.15), 0 3px 5px -2px rgba(0,0,0,0.1); 
+            transform: translateY(-2px) scale(1.02); 
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.25), 0 4px 8px -2px rgba(0,0,0,0.2); 
         }
         .rainbow-button:active {
-            transform: translateY(-1px) scale(0.99); 
-            box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1), 0 1px 1px 0 rgba(0,0,0,0.06); 
+            transform: translateY(0px) scale(0.98); 
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3), 0 1px 2px 0 rgba(0,0,0,0.1); 
         }
 
+        /* Button color classes */
         .btn-red { background-color: #FF3B30; } .btn-red:hover { background-color: #E12D22; }
         .btn-orange { background-color: #FF9500; } .btn-orange:hover { background-color: #E18400; }
         .btn-yellow { background-color: #FFCC00; color: #1A202C; } .btn-yellow:hover { background-color: #E1B400; }
@@ -89,7 +90,7 @@
         }
         
         .content-card { 
-            background-color: rgba(17, 24, 39, 0.9); 
+            background-color: rgba(17, 24, 39, 0.9); /* Darker card base for contrast with RGB bg */
             backdrop-filter: blur(12px); 
             border-radius: 0.75rem; 
             padding: 1.25rem; 
@@ -103,9 +104,9 @@
         }
 
         .header-card { 
-             background-color: rgba(10, 10, 20, 0.95); 
-             backdrop-filter: blur(14px); 
-             border-bottom: 1px solid rgba(255,255,255,0.06); 
+             background-color: rgba(10, 10, 20, 0.92); /* Retained dark header */
+             backdrop-filter: blur(12px); 
+             border-bottom: 1px solid rgba(255,255,255,0.05); 
         }
 
         .product-card {
@@ -113,7 +114,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            background-color: rgba(23, 31, 48, 0.88); 
+            background-color: rgba(30, 41, 59, 0.88); /* Retained dark product card bg */
         }
         .product-card:hover {
             transform: translateY(-7px) scale(1.01); 
@@ -166,59 +167,83 @@
             animation: spinCartIcon 0.6s ease-in-out;
         }
         @keyframes pulseCartCount {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7); } /* Indigo color for pulse */
-            50% { transform: scale(1.4); box-shadow: 0 0 0 8px rgba(99, 102, 241, 0); } /* Wider pulse */
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7); } 
+            50% { transform: scale(1.4); box-shadow: 0 0 0 8px rgba(99, 102, 241, 0); } 
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
         }
         .cart-count-pulse {
-            animation: pulseCartCount 0.6s ease-in-out; /* Slightly longer pulse */
+            animation: pulseCartCount 0.6s ease-in-out; 
         }
 
 
         /* Smoke Effect */
         .smoke-particle {
             position: fixed; 
-            background-color: rgba(230, 230, 230, 0.55); 
+            background-color: rgba(235, 235, 245, 0.6); 
             border-radius: 50%;
             pointer-events: none;
-            animation: smokeAnimation 1.3s ease-out forwards; 
+            animation: smokeAnimation 1.5s ease-out forwards; 
             opacity: 0; 
             z-index: 2000; 
         }
 
         @keyframes smokeAnimation {
             0% {
-                transform: scale(0.7) translate(0, 0); 
-                opacity: 0.95; 
+                transform: scale(0.8) translate(0, 0); 
+                opacity: 1; 
+            }
+            20% { 
+                opacity: 0.8;
             }
             100% {
-                transform: scale(2.8) translate(var(--tx, 0px), var(--ty, -80px)); 
+                transform: scale(3.5) translate(var(--tx, 0px), var(--ty, -100px)); 
                 opacity: 0;
             }
         }
         
         /* Modal Input Styling */
         .modal-input {
-            background-color: #374151; /* slate-700 */
+            background-color: #374151; 
             color: #e0e7ff;
-            border: 1px solid #4b5563; /* slate-600 */
-            border-radius: 0.375rem; /* rounded-md */
+            border: 1px solid #4b5563; 
+            border-radius: 0.375rem; 
             padding: 0.5rem 0.75rem;
             width: 100%;
             transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
         .modal-input:focus {
             outline: none;
-            border-color: #5856D6; /* Indigo */
+            border-color: #5856D6; 
             box-shadow: 0 0 0 2px rgba(88, 86, 214, 0.3);
         }
         .modal-textarea {
             min-height: 80px;
         }
         .checkout-details-error {
-            color: #f87171; /* red-400 */
-            font-size: 0.875rem; /* text-sm */
+            color: #f87171; 
+            font-size: 0.875rem; 
             margin-top: 0.25rem;
+        }
+        .payment-option label {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0.75rem;
+            background-color: #374151;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            border: 1px solid #4b5563;
+        }
+        .payment-option input[type="radio"] {
+            margin-right: 0.5rem;
+            accent-color: #5856D6; /* Indigo */
+        }
+        .payment-option label:hover {
+            background-color: #4b5563;
+        }
+        .payment-option input[type="radio"]:checked + span {
+            font-weight: 600;
+            color: #a5b4fc; /* Lighter indigo for selected text */
         }
 
     </style>
@@ -301,9 +326,9 @@
     </div>
 
     <div id="checkoutDetailsModal" class="fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm flex items-center justify-center z-[1001] hidden p-4 transition-opacity duration-300 ease-in-out opacity-0">
-        <div class="bg-slate-800 p-5 sm:p-6 rounded-xl shadow-2xl w-full max-w-md md:max-w-lg max-h-[90vh] flex flex-col border border-slate-700 transform transition-all duration-300 ease-in-out scale-95 opacity-0" id="checkoutDetailsModalContent">
+        <div class="bg-slate-800 p-5 sm:p-6 rounded-xl shadow-2xl w-full max-w-md md:max-w-lg max-h-[95vh] flex flex-col border border-slate-700 transform transition-all duration-300 ease-in-out scale-95 opacity-0" id="checkoutDetailsModalContent">
             <div class="flex justify-between items-center mb-6 pb-3 border-b border-slate-600">
-                <h2 class="text-xl sm:text-2xl font-semibold text-white">Delivery & Contact Details</h2>
+                <h2 class="text-xl sm:text-2xl font-semibold text-white">Delivery & Payment</h2>
                 <button id="closeCheckoutDetailsModalBtn" class="text-gray-400 hover:text-red-400 transition-colors p-1 rounded-md text-2xl leading-none">&times;</button>
             </div>
             <div class="flex-grow overflow-y-auto mb-4 pr-1 space-y-4">
@@ -327,9 +352,23 @@
                     <input type="tel" id="phone" name="phone" class="modal-input" placeholder="e.g., 0821234567">
                     <p id="phoneError" class="checkout-details-error hidden">Phone number is required.</p>
                 </div>
+                 <div>
+                    <label class="block text-sm font-medium text-indigo-200 mb-2">Payment Method</label>
+                    <div class="space-y-2">
+                        <div class="payment-option">
+                            <input type="radio" id="paymentCod" name="paymentMethod" value="Cash on Delivery" class="modal-input-radio">
+                            <label for="paymentCod" class="ml-2 text-sm text-gray-300 cursor-pointer"><span>Cash on Delivery</span></label>
+                        </div>
+                        <div class="payment-option">
+                            <input type="radio" id="paymentEft" name="paymentMethod" value="EFT" class="modal-input-radio">
+                            <label for="paymentEft" class="ml-2 text-sm text-gray-300 cursor-pointer"><span>EFT (Electronic Funds Transfer)</span></label>
+                        </div>
+                    </div>
+                    <p id="paymentMethodError" class="checkout-details-error hidden">Please select a payment method.</p>
+                </div>
             </div>
             <div class="border-t border-slate-600 pt-4 space-y-3">
-                 <p id="checkoutFormError" class="checkout-details-error text-center hidden">Please fill in all required fields.</p>
+                 <p id="checkoutFormError" class="checkout-details-error text-center hidden">Please fill in all required fields and select a payment method.</p>
                 <div class="flex space-x-3">
                     <button id="backToCartBtn" class="w-1/2 rainbow-button btn-orange text-sm sm:text-base py-2.5">Back to Cart</button>
                     <button id="confirmOrderBtn" class="w-1/2 rainbow-button btn-green text-sm sm:text-base py-2.5">Confirm & Email</button>
@@ -395,6 +434,7 @@
             const addressInput = document.getElementById('address');
             const phoneInput = document.getElementById('phone');
             const checkoutFormError = document.getElementById('checkoutFormError');
+            const paymentMethodError = document.getElementById('paymentMethodError');
 
 
             function renderProducts(productsToRender) {
@@ -459,27 +499,27 @@
             
             updateCartDisplay();
             
-            function createSmokeEffect(button) {
-                const rect = button.getBoundingClientRect();
-                const buttonCenterX = rect.left + rect.width / 2;
-                const buttonCenterY = rect.top + rect.height / 2;
+            function createSmokeEffect(button, event) { // Pass the click event
+                const clickX = event.clientX;
+                const clickY = event.clientY;
             
-                for (let i = 0; i < 15; i++) { 
+                for (let i = 0; i < 20; i++) { // Increased particle count for more noticeability
                     const particle = document.createElement('div');
                     particle.classList.add('smoke-particle');
                     document.body.appendChild(particle); 
             
-                    const size = Math.random() * 20 + 8; 
+                    const size = Math.random() * 25 + 10; // Particle size: 10px to 35px
                     particle.style.width = `${size}px`;
                     particle.style.height = `${size}px`;
                     
-                    particle.style.left = `${buttonCenterX - size / 2 + (Math.random() - 0.5) * 30}px`; 
-                    particle.style.top = `${buttonCenterY - size / 2 + (Math.random() - 0.5) * 15}px`;
+                    // Position particle at the click location
+                    particle.style.left = `${clickX - size / 2}px`; 
+                    particle.style.top = `${clickY - size / 2}px`;
                     
-                    const angle = Math.random() * Math.PI * 2; 
-                    const distance = Math.random() * 60 + 30; 
+                    const angle = (Math.random() - 0.5) * Math.PI; // Spread upwards more
+                    const distance = Math.random() * 80 + 40; // Increased spread distance
                     particle.style.setProperty('--tx', `${Math.cos(angle) * distance}px`);
-                    particle.style.setProperty('--ty', `${Math.sin(angle) * distance - 70}px`); 
+                    particle.style.setProperty('--ty', `${Math.sin(angle) * distance - 90}px`); // More pronounced upward movement
             
                     particle.addEventListener('animationend', () => {
                         particle.remove();
@@ -505,7 +545,7 @@
                     button.replaceWith(button.cloneNode(true)); 
                 });
                 document.querySelectorAll('.add-to-cart-btn').forEach(button => {
-                    button.addEventListener('click', () => {
+                    button.addEventListener('click', (event) => { // Pass event to handler
                         const productName = button.getAttribute('data-product-name');
                         const productPrice = parseFloat(button.getAttribute('data-price'));
                         const existingItem = cart.find(item => item.name === productName);
@@ -516,7 +556,7 @@
                             cart.push({ name: productName, price: productPrice, quantity: 1 });
                         }
                         updateCartDisplay();
-                        createSmokeEffect(button); 
+                        createSmokeEffect(button, event); // Pass event to smoke effect
 
                         const originalText = button.textContent;
                         const originalBg = button.style.backgroundColor; 
@@ -622,7 +662,9 @@
                 confirmOrderBtn.addEventListener('click', () => {
                     let isValid = true;
                     checkoutFormError.classList.add('hidden');
-                    document.querySelectorAll('#checkoutDetailsModal .checkout-details-error').forEach(el => el.classList.add('hidden'));
+                    paymentMethodError.classList.add('hidden');
+                    document.querySelectorAll('#checkoutDetailsModal .checkout-details-error:not(#paymentMethodError):not(#checkoutFormError)').forEach(el => el.classList.add('hidden'));
+
 
                     if (!firstNameInput.value.trim()) {
                         document.getElementById('firstNameError').classList.remove('hidden');
@@ -640,6 +682,13 @@
                         document.getElementById('phoneError').classList.remove('hidden');
                         isValid = false;
                     }
+                    
+                    const selectedPaymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
+                    if (!selectedPaymentMethod) {
+                        paymentMethodError.classList.remove('hidden');
+                        isValid = false;
+                    }
+
 
                     if (!isValid) {
                         checkoutFormError.classList.remove('hidden');
@@ -650,7 +699,8 @@
                     emailBody += "CUSTOMER DETAILS:\n";
                     emailBody += `Name: ${firstNameInput.value.trim()} ${surnameInput.value.trim()}\n`;
                     emailBody += `Address: ${addressInput.value.trim()}\n`;
-                    emailBody += `Phone: ${phoneInput.value.trim()}\n\n`;
+                    emailBody += `Phone: ${phoneInput.value.trim()}\n`;
+                    emailBody += `Payment Method: ${selectedPaymentMethod.value}\n\n`;
                     emailBody += "ORDER ITEMS:\n";
 
                     let totalAmount = 0;
@@ -678,6 +728,7 @@
                     surnameInput.value = '';
                     addressInput.value = '';
                     phoneInput.value = '';
+                    if(selectedPaymentMethod) selectedPaymentMethod.checked = false;
                     
                     setTimeout(() => { 
                         closeModal(checkoutDetailsModal, checkoutDetailsModalContent);
