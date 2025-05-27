@@ -90,7 +90,7 @@
         }
         
         .content-card { 
-            background-color: rgba(17, 24, 39, 0.9); /* Darker card base for contrast with RGB bg */
+            background-color: rgba(17, 24, 39, 0.9); 
             backdrop-filter: blur(12px); 
             border-radius: 0.75rem; 
             padding: 1.25rem; 
@@ -104,7 +104,7 @@
         }
 
         .header-card { 
-             background-color: rgba(10, 10, 20, 0.92); /* Retained dark header */
+             background-color: rgba(10, 10, 20, 0.92); 
              backdrop-filter: blur(12px); 
              border-bottom: 1px solid rgba(255,255,255,0.05); 
         }
@@ -114,7 +114,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            background-color: rgba(30, 41, 59, 0.88); /* Retained dark product card bg */
+            background-color: rgba(30, 41, 59, 0.88); 
         }
         .product-card:hover {
             transform: translateY(-7px) scale(1.01); 
@@ -224,7 +224,7 @@
             font-size: 0.875rem; 
             margin-top: 0.25rem;
         }
-        .payment-option label {
+        .payment-option label, .age-verification-option label {
             display: flex;
             align-items: center;
             padding: 0.5rem 0.75rem;
@@ -234,14 +234,14 @@
             transition: background-color 0.2s ease;
             border: 1px solid #4b5563;
         }
-        .payment-option input[type="radio"] {
+        .payment-option input[type="radio"], .age-verification-option input[type="checkbox"] {
             margin-right: 0.5rem;
             accent-color: #5856D6; /* Indigo */
         }
-        .payment-option label:hover {
+        .payment-option label:hover, .age-verification-option label:hover {
             background-color: #4b5563;
         }
-        .payment-option input[type="radio"]:checked + span {
+        .payment-option input[type="radio"]:checked + span, .age-verification-option input[type="checkbox"]:checked + span {
             font-weight: 600;
             color: #a5b4fc; /* Lighter indigo for selected text */
         }
@@ -366,9 +366,16 @@
                     </div>
                     <p id="paymentMethodError" class="checkout-details-error hidden">Please select a payment method.</p>
                 </div>
+                <div class="mt-4 age-verification-option">
+                     <input type="checkbox" id="ageConfirmation" name="ageConfirmation" class="modal-input-checkbox">
+                     <label for="ageConfirmation" class="ml-2 text-sm text-gray-300 cursor-pointer">
+                        <span>I confirm I am 18 years or older and agree to the terms of sale.</span>
+                     </label>
+                     <p id="ageConfirmationError" class="checkout-details-error hidden">You must confirm you are 18+ to proceed.</p>
+                </div>
             </div>
             <div class="border-t border-slate-600 pt-4 space-y-3">
-                 <p id="checkoutFormError" class="checkout-details-error text-center hidden">Please fill in all required fields and select a payment method.</p>
+                 <p id="checkoutFormError" class="checkout-details-error text-center hidden">Please fill in all required fields, select a payment method, and confirm your age.</p>
                 <div class="flex space-x-3">
                     <button id="backToCartBtn" class="w-1/2 rainbow-button btn-orange text-sm sm:text-base py-2.5">Back to Cart</button>
                     <button id="confirmOrderBtn" class="w-1/2 rainbow-button btn-green text-sm sm:text-base py-2.5">Confirm & Email</button>
@@ -433,8 +440,10 @@
             const surnameInput = document.getElementById('surname');
             const addressInput = document.getElementById('address');
             const phoneInput = document.getElementById('phone');
+            const ageConfirmationCheckbox = document.getElementById('ageConfirmation');
             const checkoutFormError = document.getElementById('checkoutFormError');
             const paymentMethodError = document.getElementById('paymentMethodError');
+            const ageConfirmationError = document.getElementById('ageConfirmationError');
 
 
             function renderProducts(productsToRender) {
@@ -499,27 +508,26 @@
             
             updateCartDisplay();
             
-            function createSmokeEffect(button, event) { // Pass the click event
+            function createSmokeEffect(button, event) { 
                 const clickX = event.clientX;
                 const clickY = event.clientY;
             
-                for (let i = 0; i < 20; i++) { // Increased particle count for more noticeability
+                for (let i = 0; i < 20; i++) { 
                     const particle = document.createElement('div');
                     particle.classList.add('smoke-particle');
                     document.body.appendChild(particle); 
             
-                    const size = Math.random() * 25 + 10; // Particle size: 10px to 35px
+                    const size = Math.random() * 25 + 10; 
                     particle.style.width = `${size}px`;
                     particle.style.height = `${size}px`;
                     
-                    // Position particle at the click location
                     particle.style.left = `${clickX - size / 2}px`; 
                     particle.style.top = `${clickY - size / 2}px`;
                     
-                    const angle = (Math.random() - 0.5) * Math.PI; // Spread upwards more
-                    const distance = Math.random() * 80 + 40; // Increased spread distance
+                    const angle = (Math.random() - 0.5) * Math.PI; 
+                    const distance = Math.random() * 80 + 40; 
                     particle.style.setProperty('--tx', `${Math.cos(angle) * distance}px`);
-                    particle.style.setProperty('--ty', `${Math.sin(angle) * distance - 90}px`); // More pronounced upward movement
+                    particle.style.setProperty('--ty', `${Math.sin(angle) * distance - 90}px`); 
             
                     particle.addEventListener('animationend', () => {
                         particle.remove();
@@ -545,7 +553,7 @@
                     button.replaceWith(button.cloneNode(true)); 
                 });
                 document.querySelectorAll('.add-to-cart-btn').forEach(button => {
-                    button.addEventListener('click', (event) => { // Pass event to handler
+                    button.addEventListener('click', (event) => { 
                         const productName = button.getAttribute('data-product-name');
                         const productPrice = parseFloat(button.getAttribute('data-price'));
                         const existingItem = cart.find(item => item.name === productName);
@@ -556,7 +564,7 @@
                             cart.push({ name: productName, price: productPrice, quantity: 1 });
                         }
                         updateCartDisplay();
-                        createSmokeEffect(button, event); // Pass event to smoke effect
+                        createSmokeEffect(button, event); 
 
                         const originalText = button.textContent;
                         const originalBg = button.style.backgroundColor; 
@@ -663,7 +671,8 @@
                     let isValid = true;
                     checkoutFormError.classList.add('hidden');
                     paymentMethodError.classList.add('hidden');
-                    document.querySelectorAll('#checkoutDetailsModal .checkout-details-error:not(#paymentMethodError):not(#checkoutFormError)').forEach(el => el.classList.add('hidden'));
+                    ageConfirmationError.classList.add('hidden');
+                    document.querySelectorAll('#checkoutDetailsModal .checkout-details-error:not(#paymentMethodError):not(#checkoutFormError):not(#ageConfirmationError)').forEach(el => el.classList.add('hidden'));
 
 
                     if (!firstNameInput.value.trim()) {
@@ -688,6 +697,10 @@
                         paymentMethodError.classList.remove('hidden');
                         isValid = false;
                     }
+                    if (!ageConfirmationCheckbox.checked) {
+                        ageConfirmationError.classList.remove('hidden');
+                        isValid = false;
+                    }
 
 
                     if (!isValid) {
@@ -700,7 +713,8 @@
                     emailBody += `Name: ${firstNameInput.value.trim()} ${surnameInput.value.trim()}\n`;
                     emailBody += `Address: ${addressInput.value.trim()}\n`;
                     emailBody += `Phone: ${phoneInput.value.trim()}\n`;
-                    emailBody += `Payment Method: ${selectedPaymentMethod.value}\n\n`;
+                    emailBody += `Payment Method: ${selectedPaymentMethod.value}\n`;
+                    emailBody += `Age Confirmed (18+): Yes\n\n`;
                     emailBody += "ORDER ITEMS:\n";
 
                     let totalAmount = 0;
@@ -729,6 +743,7 @@
                     addressInput.value = '';
                     phoneInput.value = '';
                     if(selectedPaymentMethod) selectedPaymentMethod.checked = false;
+                    ageConfirmationCheckbox.checked = false;
                     
                     setTimeout(() => { 
                         closeModal(checkoutDetailsModal, checkoutDetailsModalContent);
