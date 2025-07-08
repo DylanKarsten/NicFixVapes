@@ -225,7 +225,7 @@
             font-size: 0.875rem;
             margin-top: 0.25rem;
         }
-        .payment-option label, .age-verification-option label {
+        .checkout-option label, .age-verification-option label {
             display: flex;
             align-items: center;
             padding: 0.5rem 0.75rem;
@@ -235,14 +235,14 @@
             transition: background-color 0.2s ease;
             border: 1px solid #4b5563;
         }
-        .payment-option input[type="radio"], .age-verification-option input[type="checkbox"] {
+        .checkout-option input[type="radio"], .age-verification-option input[type="checkbox"] {
             margin-right: 0.5rem;
             accent-color: #5856D6; /* Indigo */
         }
-        .payment-option label:hover, .age-verification-option label:hover {
+        .checkout-option label:hover, .age-verification-option label:hover {
             background-color: #4b5563;
         }
-        .payment-option input[type="radio"]:checked + span, .age-verification-option input[type="checkbox"]:checked + span {
+        .checkout-option input[type="radio"]:checked + span, .age-verification-option input[type="checkbox"]:checked + span {
             font-weight: 600;
             color: #a5b4fc; /* Lighter indigo for selected text */
         }
@@ -346,10 +346,27 @@
     <div id="checkoutDetailsModal" class="fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm flex items-center justify-center z-[1001] hidden p-4 transition-opacity duration-300 ease-in-out opacity-0">
         <div class="bg-slate-800 p-5 sm:p-6 rounded-xl shadow-2xl w-full max-w-md md:max-w-lg max-h-[95vh] flex flex-col border border-slate-700 transform transition-all duration-300 ease-in-out scale-95 opacity-0" id="checkoutDetailsModalContent">
             <div class="flex justify-between items-center mb-6 pb-3 border-b border-slate-600">
-                <h2 class="text-xl sm:text-2xl font-semibold text-white">Delivery & Payment</h2>
+                <h2 class="text-xl sm:text-2xl font-semibold text-white">Checkout Details</h2>
                 <button id="closeCheckoutDetailsModalBtn" class="text-gray-400 hover:text-red-400 transition-colors p-1 rounded-md text-2xl leading-none">&times;</button>
             </div>
             <div class="flex-grow overflow-y-auto mb-4 pr-1 space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-indigo-200 mb-2">Fulfillment Method</label>
+                    <div class="space-y-2">
+                        <div class="checkout-option">
+                             <label for="fulfillmentDelivery">
+                                <input type="radio" id="fulfillmentDelivery" name="fulfillmentMethod" value="Delivery" class="modal-input-radio" checked>
+                                <span>Delivery (R50 fee for orders under R500)</span>
+                             </label>
+                        </div>
+                        <div class="checkout-option">
+                            <label for="fulfillmentPickup">
+                                <input type="radio" id="fulfillmentPickup" name="fulfillmentMethod" value="Pickup" class="modal-input-radio">
+                                <span>Pickup (Free)</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
                 <div>
                     <label for="firstName" class="block text-sm font-medium text-indigo-200 mb-1">First Name</label>
                     <input type="text" id="firstName" name="firstName" class="modal-input" placeholder="e.g., John">
@@ -360,7 +377,7 @@
                     <input type="text" id="surname" name="surname" class="modal-input" placeholder="e.g., Doe">
                     <p id="surnameError" class="checkout-details-error hidden">Surname is required.</p>
                 </div>
-                <div>
+                <div id="deliveryAddressSection">
                     <label for="address" class="block text-sm font-medium text-indigo-200 mb-1">Delivery Address</label>
                     <textarea id="address" name="address" rows="3" class="modal-input modal-textarea" placeholder="e.g., 123 Vape Street, Springs, Gauteng"></textarea>
                     <p id="addressError" class="checkout-details-error hidden">Delivery address is required.</p>
@@ -373,13 +390,13 @@
                  <div>
                     <label class="block text-sm font-medium text-indigo-200 mb-2">Payment Method</label>
                     <div class="space-y-2">
-                        <div class="payment-option">
+                        <div class="checkout-option">
                              <label for="paymentCod">
                                 <input type="radio" id="paymentCod" name="paymentMethod" value="Cash on Delivery" class="modal-input-radio">
-                                <span>Cash on Delivery</span>
+                                <span>Cash on Delivery/Pickup</span>
                              </label>
                         </div>
-                        <div class="payment-option">
+                        <div class="checkout-option">
                             <label for="paymentEft">
                                 <input type="radio" id="paymentEft" name="paymentMethod" value="EFT" class="modal-input-radio">
                                 <span>EFT (Electronic Funds Transfer)</span>
@@ -606,7 +623,6 @@
                 cartModalBody.appendChild(emptyCartMessage);
                 emptyCartMessage.style.display = 'block';
                 proceedToCheckoutDetailsBtn.classList.add('opacity-50', 'cursor-not-allowed');
-                deliveryFeeSectionCart.style.display = 'none';
             } else {
                 emptyCartMessage.style.display = 'none';
                 proceedToCheckoutDetailsBtn.classList.remove('opacity-50', 'cursor-not-allowed');
@@ -627,9 +643,17 @@
             }
             
             cartSubtotalElement.textContent = `R${subtotal.toFixed(2)}`;
+            updateGrandTotal(); // Update total whenever cart display is refreshed
+            
+            sessionStorage.setItem('nicfixCart', JSON.stringify(cart));
+        }
 
+        function updateGrandTotal() {
+            const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+            const isPickup = document.getElementById('fulfillmentPickup')?.checked;
+            
             let deliveryFee = 0;
-            if (subtotal > 0 && subtotal < 500) {
+            if (!isPickup && subtotal > 0 && subtotal < 500) {
                 deliveryFee = 50;
                 cartDeliveryFeeElement.textContent = `R${deliveryFee.toFixed(2)}`;
                 deliveryFeeSectionCart.style.display = 'flex';
@@ -639,8 +663,6 @@
 
             const grandTotal = subtotal + deliveryFee;
             cartGrandTotalElement.textContent = `R${grandTotal.toFixed(2)}`;
-            
-            sessionStorage.setItem('nicfixCart', JSON.stringify(cart));
         }
         
         updateCartDisplay();
@@ -794,13 +816,29 @@
             });
         }
 
+        const fulfillmentRadios = document.querySelectorAll('input[name="fulfillmentMethod"]');
+        const deliveryAddressSection = document.getElementById('deliveryAddressSection');
+
+        fulfillmentRadios.forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                if(e.target.value === 'Pickup') {
+                    deliveryAddressSection.style.display = 'none';
+                } else {
+                    deliveryAddressSection.style.display = 'block';
+                }
+                updateGrandTotal(); // Update totals in the cart modal when this changes
+            });
+        });
+
         if (confirmOrderBtn) {
             confirmOrderBtn.addEventListener('click', () => {
                 let isValid = true;
+                const selectedFulfillment = document.querySelector('input[name="fulfillmentMethod"]:checked').value;
+
                 checkoutFormError.classList.add('hidden');
                 paymentMethodError.classList.add('hidden');
                 ageConfirmationError.classList.add('hidden');
-                document.querySelectorAll('#checkoutDetailsModal .checkout-details-error:not(#paymentMethodError):not(#checkoutFormError):not(#ageConfirmationError)').forEach(el => el.classList.add('hidden'));
+                document.querySelectorAll('#checkoutDetailsModal .checkout-details-error').forEach(el => el.classList.add('hidden'));
 
 
                 if (!firstNameInput.value.trim()) {
@@ -811,7 +849,7 @@
                     document.getElementById('surnameError').classList.remove('hidden');
                     isValid = false;
                 }
-                if (!addressInput.value.trim()) {
+                if (selectedFulfillment === 'Delivery' && !addressInput.value.trim()) {
                     document.getElementById('addressError').classList.remove('hidden');
                     isValid = false;
                 }
@@ -832,17 +870,14 @@
 
 
                 if (!isValid) {
+                    checkoutFormError.textContent = 'Please fill in all required fields and confirm your age.';
                     checkoutFormError.classList.remove('hidden');
                     return;
                 }
                 
-                let subtotalAmount = 0;
-                cart.forEach(item => {
-                    subtotalAmount += item.price * item.quantity;
-                });
-
+                let subtotalAmount = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
                 let deliveryFee = 0;
-                if (subtotalAmount > 0 && subtotalAmount < 500) {
+                if (selectedFulfillment === 'Delivery' && subtotalAmount > 0 && subtotalAmount < 500) {
                     deliveryFee = 50;
                 }
                 const grandTotalAmount = subtotalAmount + deliveryFee;
@@ -851,7 +886,10 @@
                 let emailBody = "Hello NicFix Team,\n\nI would like to place an order for the following items:\n\n";
                 emailBody += "CUSTOMER DETAILS:\n";
                 emailBody += `Name: ${firstNameInput.value.trim()} ${surnameInput.value.trim()}\n`;
-                emailBody += `Address: ${addressInput.value.trim()}\n`;
+                emailBody += `Fulfillment Method: ${selectedFulfillment}\n`;
+                if (selectedFulfillment === 'Delivery') {
+                    emailBody += `Address: ${addressInput.value.trim()}\n`;
+                }
                 emailBody += `Phone: ${phoneInput.value.trim()}\n`;
                 emailBody += `Payment Method: ${selectedPaymentMethod.value}\n`;
                 emailBody += `Age Confirmed (18+): Yes\n\n`;
@@ -868,7 +906,11 @@
                 }
                 emailBody += `\nGRAND TOTAL: R${grandTotalAmount.toFixed(2)}`;
                 emailBody += "\n----------------------------------";
-                emailBody += "\n\nPlease advise on payment methods and delivery options to Springs, Gauteng.";
+                if (selectedFulfillment === 'Delivery') {
+                    emailBody += "\n\nPlease advise on payment methods and delivery options to Springs, Gauteng.";
+                } else {
+                    emailBody += "\n\nPlease advise on payment and when the order will be ready for pickup.";
+                }
                 emailBody += "\n\nLooking forward to my NicFix!";
                 emailBody += `\n\nKind regards,\n${firstNameInput.value.trim()} ${surnameInput.value.trim()}`;
 
@@ -887,6 +929,8 @@
                 phoneInput.value = '';
                 if(selectedPaymentMethod) selectedPaymentMethod.checked = false;
                 ageConfirmationCheckbox.checked = false;
+                document.getElementById('fulfillmentDelivery').checked = true;
+                deliveryAddressSection.style.display = 'block';
                 
                 setTimeout(() => {
                     closeModal(checkoutDetailsModal, checkoutDetailsModalContent);
