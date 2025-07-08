@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -142,15 +143,16 @@
         .cart-modal-item:last-child {
             border-bottom: none;
         }
-        .filter-select {
+        .filter-select, .flavor-select { /* Combined select style */
             background-color: #1f2937;
             color: #e0e7ff;
             border: 1px solid #374151;
             border-radius: 0.5rem;
             padding: 0.6rem 0.8rem;
             transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            width: 100%; /* Make selects full width by default */
         }
-        .filter-select:focus, #searchBar:focus { /* Combined focus style */
+        .filter-select:focus, #searchBar:focus, .flavor-select:focus { /* Combined focus style */
             outline: none;
             border-color: #5856D6;
             box-shadow: 0 0 0 2px rgba(88, 86, 214, 0.3);
@@ -303,7 +305,8 @@
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8" id="productGrid">
-            </div>
+            <!-- Product cards will be injected here by JavaScript -->
+        </div>
     </main>
 
     <footer class="bg-black/90 py-10 text-center border-t border-gray-700/50 mt-auto">
@@ -311,6 +314,7 @@
         <p class="text-sm text-gray-400 mt-3 px-4">Based in Springs, Gauteng, South Africa. Responsible vaping is advised. Products are for adult use only (18+).</p>
     </footer>
 
+    <!-- Cart Modal -->
     <div id="cartModal" class="fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm flex items-center justify-center z-[1000] hidden p-4 transition-opacity duration-300 ease-in-out opacity-0">
         <div class="bg-slate-800 p-5 sm:p-6 rounded-xl shadow-2xl w-full max-w-md md:max-w-lg max-h-[90vh] flex flex-col border border-slate-700 transform transition-all duration-300 ease-in-out scale-95 opacity-0" id="cartModalContent">
             <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-600">
@@ -338,6 +342,7 @@
         </div>
     </div>
 
+    <!-- Checkout Details Modal -->
     <div id="checkoutDetailsModal" class="fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm flex items-center justify-center z-[1001] hidden p-4 transition-opacity duration-300 ease-in-out opacity-0">
         <div class="bg-slate-800 p-5 sm:p-6 rounded-xl shadow-2xl w-full max-w-md md:max-w-lg max-h-[95vh] flex flex-col border border-slate-700 transform transition-all duration-300 ease-in-out scale-95 opacity-0" id="checkoutDetailsModalContent">
             <div class="flex justify-between items-center mb-6 pb-3 border-b border-slate-600">
@@ -407,64 +412,63 @@
         let cart = JSON.parse(sessionStorage.getItem('nicfixCart')) || [];
         
         const rawProductData = [
+            // Pod Systems & Kits (No Flavors)
             { id: 1, name: "VAPORESSO XROS 4 MINI", description: "Refillable Pod System", details: "3ml Pod Capacity", price: 440.00, image: "https://wizvape.co.uk/cdn/shop/files/XROS4MINI-black_700x700.webp?v=1714408741", colorClass: "btn-indigo", textColorClass: "text-purple-300" },
-            { id: 2, name: "Solobar S10000 - Apple Smoothies", description: "Flavor: Apple Smoothies", details: "10000 Puffs", price: 180.00, image: "https://bhikaimports.co.za/wp-content/uploads/2024/04/Apple-Smoothies.png", colorClass: "btn-green", textColorClass: "text-green-300" },
-            { id: 3, name: "Solobar S10000 - Lady Killer", description: "Flavor: Lady Killer", details: "10000 Puffs", price: 180.00, image: "https://bhikaimports.co.za/wp-content/uploads/2024/04/Lady-Killer.png", colorClass: "btn-yellow", textColorClass: "text-yellow-300" },
-            { id: 4, name: "Solobar S10000 - Watermelon Strawberry", description: "Flavor: Watermelon Strawberry Freeze", details: "10000 Puffs", price: 180.00, image: "https://bhikaimports.co.za/wp-content/uploads/2024/04/Strawberry-Watermelon-Freeze.png", colorClass: "btn-red", textColorClass: "text-red-300" },
-            { id: 5, name: "Solobar S10000 - Blue Cherry Dragon Fruit", description: "Flavor: Blue Cherry Dragon Fruit", details: "10000 Puffs", price: 180.00, image: "https://bhikaimports.co.za/wp-content/uploads/2024/04/Blue-Cherry-Dragon-Fruit.png", colorClass: "btn-blue", textColorClass: "text-blue-300" },
-            { id: 6, name: "Solobar S10000 - Cherry Sparkling Juice", description: "Flavor: Cherry Sparkling Juice", details: "10000 Puffs", price: 180.00, image: "https://bhikaimports.co.za/wp-content/uploads/2024/04/Cherry-Sparkling-Juice.png", colorClass: "btn-pink", textColorClass: "text-pink-300" },
             { id: 7, name: "SMOK AIRPEN", description: "Compact Pod Device", details: "Pen-style Vape", price: 210.00, image: "https://www.lca-distribution.com/44558-thickbox_default/kit-airpen-1100mah-smoktech.jpg", colorClass: "btn-orange", textColorClass: "text-orange-300" },
-            { id: 8, name: "VOZOL VISTA 20000", description: "Rechargeable Vape Bar", details: "20000 Puffs", price: 285.00, image: "https://th.bing.com/th/id/OIP.MosHnR5U6rz2jVnvmFlmxAHaHa?cb=iwp2&rs=1&pid=ImgDetMain", colorClass: "btn-violet", textColorClass: "text-violet-300" },
             { id: 9, name: "VAPORESSO XROS PRO POD KIT", description: "Advanced Pod Kit", details: "Professional Grade", price: 530.00, image: "https://th.bing.com/th/id/OIP.xW1o5giYZ10O8F3uMZxcbwHaHa?cb=iwp2&rs=1&pid=ImgDetMain", colorClass: "btn-teal", textColorClass: "text-teal-300" },
-            { id: 10, name: "NASTY RECHARGEABLE BAR 16000", description: "Rechargeable Bar 50MG", details: "16000 Puffs", price: 240.00, image: "https://wickedimports.co.za/wp-content/uploads/2024/02/Cola-Ice.png", colorClass: "btn-rose", textColorClass: "text-rose-300" },
             { id: 11, name: "IQOS ILUMA ONE KIT", description: "Heated Tobacco Device", details: "All-in-one Design", price: 460.00, image: "https://cdn.public.steam-time.de/images/org/Iqos-Iluma-One-_0000_Galerie.jpg", colorClass: "btn-indigo", textColorClass: "text-indigo-300" },
-            { id: 12, name: "WICKED JUICE LONGFILL", description: "E-Liquid Concentrate", details: "Add Your Own Nicotine", price: 92.00, image: "https://www.vapoter.fr/images/products/p_46003-31088-wicked-haze-longfill-nasty-juice-20ml-00mg.jpg", colorClass: "btn-lime", textColorClass: "text-lime-300" },
-            { id: 13, name: "VAPENGIN CERES RECHARGEABLE BAR", description: "Rechargeable Disposable", details: "High Puff Count", price: 305.00, image: "https://wickedimports.co.za/wp-content/uploads/2024/12/Vapengin-Ceres-400x400.png", colorClass: "btn-yellow", textColorClass: "text-yellow-400" },
             { id: 14, name: "ELFBAR RECHARGEABLE POD KIT", description: "Rechargeable Pod System", details: "Popular & Reliable", price: 250.00, image: "https://wildfirevape.co.uk/wp-content/uploads/2022/10/elfa-pod-kit-reusable-elf-bar.jpg", colorClass: "btn-pink", textColorClass: "text-pink-400" },
             { id: 15, name: "SMOK NOVO PRO POD KIT", description: "Advanced Pod System", details: "Feature-Rich", price: 400.00, image: "https://th.bing.com/th/id/R.d6924467680906af3aae2be80e351ca4?rik=zgptB6iw0CS6Tg&riu=http%3a%2f%2fwww.ecigwizard.com%2fcdn%2fshop%2ffiles%2fsmok-novo-pro-kit-black-carbon-fibre_1024x1024.png%3fv%3d1704284610&ehk=1f0WLkbgl9GGVw9liE1A37gwwyXv%2b8y%2biW6Cf5uY6Z4%3d&risl=&pid=ImgRaw&r=0", colorClass: "btn-cyan", textColorClass: "text-cyan-300" },
-            { id: 16, name: "VAPENGIN RECHARGEBALE BAR 8500", description: "Rechargeable Bar 50MG", details: "8500 Puffs", price: 130.00, image: "https://wickedimports.co.za/wp-content/uploads/2024/03/Strawberry-Banana-Smoothie-800x800.png", colorClass: "btn-green", textColorClass: "text-green-400" },
-            { id: 17, name: "HELLVAPE DISPOSABLE POD 5000", description: "Disposable Pod 20MG", details: "5000 Puffs", price: 110.00, image: "https://www.losvapos.co.za/wp-content/uploads/2023/11/Los-Vapos-Hellvape-P1-5000-Puffs-Disposable-Flavour-Pod-20mg.jpg", colorClass: "btn-red", textColorClass: "text-red-400" },
             { id: 18, name: "VAPORESSO XROS 3 MINI POD KIT", description: "Compact Pod Kit", details: "Reliable & Sleek", price: 380.00, image: "https://www.3mvcdmx.com/wp-content/uploads/2023/04/vaporesso-xros-3-mini-pod-kit-navy-blue.jpg", colorClass: "btn-indigo", textColorClass: "text-indigo-400" },
             { id: 19, name: "SMOK NOVO POD KIT", description: "Classic Pod System", details: "Compact & Easy to Use", price: 190.00, image: "https://cdn10.bigcommerce.com/s-fi8xpl/products/884/images/3872/smok-novo-pod-vape-kit__28118.1553167831.1280.1280.JPG?c=2", colorClass: "btn-pink", textColorClass: "text-pink-400" },
             { id: 20, name: "ONE CLOUD TUGBOAT POD KIT", description: "Pod System", details: "Durable Build", price: 280.00, image: "https://media.takealot.com/covers_images/50db468b259140cbbd89f151f6054b1a/s-zoom.file", colorClass: "btn-sky", textColorClass: "text-sky-400" },
             { id: 21, name: "VAPORESSO XROS 4 MINI POD KIT ART EDITION", description: "Vaporesso Pod Kit", details: "Special Edition Design", price: 425.00, image: "https://thevapestudio.co.za/cdn/shop/files/VaporessoXROS4MiniArtEditionPodKitCamoStar1.jpg?v=1731583040&width=990", colorClass: "btn-violet", textColorClass: "text-purple-400" },
-            { id: 22, name: "VOOM RECHARGEABLE BAR 1200 PLUS", description: "Rechargeable Disposable", details: "~1200 Puffs", price: 215.00, image: "https://arenatobacco.com/wp-content/uploads/Peach-ice.png", colorClass: "btn-cyan", textColorClass: "text-cyan-400" },
-            { id: 23, name: "ELF RECHARGEABLE VAPE BAR- ICE KING", description: "Rechargeable Vape Bar", details: "Cooling Flavors", price: 310.00, image: "https://www.expresstabacaria.com.br/timthumb.php?src=image/catalog/pod/poddescartavel/elfbar/40kice/40kiceking.png&w=800=&h=800&zc=1", colorClass: "btn-blue", textColorClass: "text-blue-400" },
             { id: 24, name: "ZLAND MINI RECHARGEABLE BATTERY", description: "Rechargeable Battery", details: "For ZLAND Mini Pods", price: 103.00, image: "https://th.bing.com/th/id/OIP.HwRUHfXq1Sk54Z5tEmKhxQHaHa?cb=iwp2&rs=1&pid=ImgDetMain", colorClass: "btn-amber", textColorClass: "text-amber-400" },
-            { id: 25, name: "NOVO POD REPLACEMENT", description: "Pod Accessory", details: "Replacement Pod", price: 65.00, image: "https://th.bing.com/th/id/OIP.IWYOLNVaLWG6e2TBOaXTDQHaHa?w=1200&h=1200&rs=1&pid=ImgDetMain", colorClass: "btn-red", textColorClass: "text-red-300" },
-            { id: 26, name: "PODS PLUS LONGFILL", description: "E-Liquid Concentrate", details: "Longfill E-Liquid", price: 92.00, image: "https://th.bing.com/th/id/OIP.UbSFoZA2qvhQqm8ZcmaDHAHaHa?rs=1&pid=ImgDetMain", colorClass: "btn-orange", textColorClass: "text-orange-300" },
-            { id: 27, name: "PODS & SALTS LONGFILL", description: "E-Liquid Concentrate", details: "Longfill E-Liquid", price: 85.00, image: "https://s3.amazonaws.com/images.ecwid.com/images/72493436/4029866138.jpg", colorClass: "btn-yellow", textColorClass: "text-yellow-300" },
-            { id: 28, name: "RAW NICOTINE SHOT 50MG", description: "Nicotine Additive", details: "50MG Nicotine Shot", price: 110.00, image: "https://th.bing.com/th/id/OIP.1GRMUMaipFKehTjKKkst3gHaHa?rs=1&pid=ImgDetMain", colorClass: "btn-green", textColorClass: "text-green-300" },
-            { id: 29, name: "ONE CLOUD TUGBOAT REPLACEMENT PODS", description: "Pod Accessory", details: "For Tugboat Kit", price: 70.00, image: "https://image.made-in-china.com/2f0j00pcYoRzgCYWbO/Tugboat-Replaced-Cartridge-Super-Pod-7000-12000-Puffs-Manufacturer-Direct-Sales-Life-Pod-Vaporizer-Pod.jpg", colorClass: "btn-blue", textColorClass: "text-blue-300" },
-            { id: 30, name: "NASTY RECHARGEABLE BAR MAX 30000 50MG", description: "Rechargeable Vape Bar", details: "30000 Puffs, 50MG", price: 310.00, image: "https://wickedimports.co.za/wp-content/uploads/2025/02/Nasty-30000-1-200x200.png", colorClass: "btn-indigo", textColorClass: "text-indigo-300" },
-            { id: 31, name: "ZLAND MINI DISPOSABLE POD", description: "Disposable Pod", details: "For ZLAND System", price: 70.00, image: "https://jm-wholesale.co.uk/cdn/shop/files/Gray_kit_2048x2048.jpg?v=1738666919", colorClass: "btn-violet", textColorClass: "text-purple-300" },
-            { id: 32, name: "NASTY RECHARGEABLE BAR 14000", description: "Rechargeable Vape Bar", details: "14000 Puffs", price: 230.00, image: "https://www.usbandmore.co.za/cdn/shop/files/Screenshot2025-01-14at14-22-56NastyRechargeableBar-X-NIC14000-WickedImports_Pty_Ltd_1024x1024@2x.png?v=1736862721", colorClass: "btn-teal", textColorClass: "text-teal-300" },
-            { id: 33, name: "NASTY RECHARGEABLE BAR X-NIC", description: "Rechargeable Vape Bar", details: "X-NIC Series", price: 230.00, image: "https://coffeeandvape.co.za/cdn/shop/files/Strawberry-Ice-2_Nasty_Bar_X_9000_Disposable_Vape.webp?v=1725539052&width=1445", colorClass: "btn-pink", textColorClass: "text-pink-300" },
-            { id: 35, name: "ELF DISPOSABLE POD 9000", description: "Disposable Vape", details: "9000 Puffs", price: 140.00, image: "https://www.libertyvape.ca/cdn/shop/files/elf-bar-ew9000-disposable-pod-starter-kit-9000-puffs-16ml-41811400458479_1024x1024.webp?v=1718929333", colorClass: "btn-cyan", textColorClass: "text-cyan-300" },
-            { id: 36, name: "VAPENGIN RECHARGEABLE BAR MARS 20000", description: "Rechargeable Vape Bar", details: "20000 Puffs", price: 295.00, image: "https://media.portmoni.com/84499/vapengin_mars.jpg", colorClass: "btn-rose", textColorClass: "text-rose-300" },
-            { id: 37, name: "SOLOBAR RECHARGEABLE REVOLVER POD", description: "Pod Accessory", details: "For Revolver Kit", price: 75.00, image: "https://wickedimports.co.za/wp-content/uploads/2024/06/POD-Solo-Bull-400x400.png", colorClass: "btn-amber", textColorClass: "text-amber-400" },
             { id: 38, name: "SOLOBAR RECHARGEABLE REVOLVER KIT", description: "Pod System Kit", details: "Rechargeable Kit", price: 250.00, image: "https://wickedimports.co.za/wp-content/uploads/2024/06/KIT.png", colorClass: "btn-sky", textColorClass: "text-sky-300" },
-            { id: 39, name: "NASTY DISPOSABLE POD", description: "Disposable Vape", details: "Convenient Pod", price: 115.00, image: "https://vape.co.uk/product/10mg-nasty-fix-disposable-vape-pod-675-puffs/JWN10mgNastyFixVape5.jpg", colorClass: "btn-red", textColorClass: "text-red-300" },
-            { id: 40, name: "ELFBAR RECHARGEABLE VAPE BAR 18000", description: "Rechargeable Vape Bar", details: "18000 Puffs", price: 280.00, image: "https://media.portmoni.com/84499/ELF_BAR_GLkn6v8.jpg", colorClass: "btn-orange", textColorClass: "text-orange-300" },
-            { id: 41, name: "NASTY RECHARGEABLE BAR 20000 PUFF 5MG", description: "Rechargeable Vape Bar", details: "20000 Puffs, 5MG", price: 275.00, image: "https://vapewholesaleusa.com/media/amasty/webp/catalog/product/cache/d96b96d9c12f2c2b4ad9e39d4f520b12/n/a/nasty-disposable-20000-puff-1_jpg.webp", colorClass: "btn-yellow", textColorClass: "text-yellow-300" },
-            { id: 42, name: "NASTY DLT RECHARGEABLE BAR 10000 PUFF 3MG", description: "Rechargeable Vape Bar", details: "10000 Puffs, 3MG DLT", price: 260.00, image: "https://www.downtownvapoury.co.za/cdn/shop/files/nasty-dtl-rechargeable-bar-10000-puff-3mgdowntown-vapoury-913746.png?v=1715060467", colorClass: "btn-green", textColorClass: "text-green-300" },
-            { id: 43, name: "VAPORESSO XROS SERIES REPLACEMENT POD", description: "Pod Accessory", details: "For XROS Series", price: 65.00, image: "https://cdn11.bigcommerce.com/s-n0pphwyuq9/images/stencil/1280x1280/products/1007/5103/001__48831.1683262516.jpg?c=1&imbypass=on", colorClass: "btn-blue", textColorClass: "text-blue-300" },
             { id: 44, name: "IQOS ILUMA KIT", description: "Heated Tobacco Device", details: "Full Kit", price: 750.00, image: "https://th.bing.com/th/id/OIP.Pw_vUIt559Sr7nzpyV_vswHaHa?rs=1&pid=ImgDetMain", colorClass: "btn-indigo", textColorClass: "text-indigo-300" },
-            { id: 45, name: "SOLOBAR RECHARGEABLE BAR 10000 PUFF 50 MG", description: "Rechargeable Vape Bar", details: "10000 Puffs, 50MG", price: 180.00, image: "https://vapebyffenics.co.za/wp-content/uploads/2024/11/Solobar-Rechargeable-Revolver-Kit-10-000-Disposable-50mg-includes-4-pre-filled-pods.jpeg", colorClass: "btn-violet", textColorClass: "text-purple-300" },
             { id: 46, name: "NASTY RECHARGEABLE BATTERY", description: "Accessory", details: "Rechargeable Battery", price: 165.00, image: "https://wickedimports.co.za/wp-content/uploads/2024/02/NSTB01-Black.png", colorClass: "btn-teal", textColorClass: "text-teal-300" },
             { id: 47, name: "HELLVAPE RECHARGEABLE POD VAPE", description: "Rechargeable Pod System", details: "Compact Vape", price: 165.00, image: "https://wickedimports.co.za/wp-content/uploads/2024/01/Battery.png", colorClass: "btn-pink", textColorClass: "text-pink-300" },
-            { id: 48, name: "VOZOL SWITCH POD 1600C POD 50 MG", description: "Pod Accessory", details: "1600 Puffs, 50MG", price: 130.00, image: "https://th.bing.com/th/id/OIP.tATj62_yrVZ2A-etZJoM8QHaHa?w=900&h=900&rs=1&pid=ImgDetMain", colorClass: "btn-lime", textColorClass: "text-lime-300" },
             { id: 49, name: "VOZOL SWITCH 1600C RECHARGEABLE POD KIT 50 MG", description: "Pod System Kit", details: "1600 Puffs, 50MG Kit", price: 200.00, image: "https://wickedimports.co.za/wp-content/uploads/2023/11/Switch-1600.png", colorClass: "btn-cyan", textColorClass: "text-cyan-300" },
-            { id: 50, name: "LOCAL VAPING LIQUID DRIP 'N GO 30 MG 30ML", description: "E-Liquid", details: "30MG, 30ML", price: 180.00, image: "https://th.bing.com/th/id/OIP.q5EKTguOKXb2OUE2WfGGbwHaHa?rs=1&pid=ImgDetMain", colorClass: "btn-rose", textColorClass: "text-rose-300" },
-            { id: 51, name: "MINIPOD DISPOSABLE VAPE 1000 PUFF 50 MG", description: "Disposable Vape", details: "1000 Puffs, 50MG", price: 100.00, image: "https://wickedimports.co.za/wp-content/uploads/2023/09/Peach-Mango.png", colorClass: "btn-amber", textColorClass: "text-amber-400" },
-            { id: 52, name: "CBD DISPOSABLE VAPE PEN JACKPOT 600MG", description: "CBD Vape Pen", details: "600MG CBD", price: 430.00, image: "https://th.bing.com/th/id/OIP.J8NIPTlZad8SUiory4fLgQHaHa?rs=1&pid=ImgDetMain", colorClass: "btn-sky", textColorClass: "text-sky-300" },
-            { id: 53, name: "NASTY 9000 PUFF RECHARGEABLE 50MG", description: "Rechargeable Vape Bar", details: "9000 Puffs, 50MG", price: 210.00, image: "https://th.bing.com/th/id/R.78c9d9d10212cf3299a4887157fca1a6?rik=Qy3Cz%2fWngrDWng&riu=http%3a%2f%2fsavestore.co.za%2fcdn%2fshop%2ffiles%2fNasty9000.jpg%3fv%3d1728816391&ehk=zhi1aJAVL3Tvn6qNcyNTG8yBOcCZ9YRjsgMfj%2fjLmYw%3d&risl=&pid=ImgRaw&r=0", colorClass: "btn-red", textColorClass: "text-red-300" },
-            { id: 54, name: "AMAREN DISPOSABLE VAPE 3500", description: "Disposable Vape", details: "3500 Puffs", price: 50.00, image: "https://got-a-lot.com/wp-content/uploads/2023/03/Joburg-Nights-AMA08.png", colorClass: "btn-orange", textColorClass: "text-orange-300" },
-            { id: 55, name: "LOCAL VAPING LIQUID PODS & SALTS- SALT NIC 50MG-30ML", description: "E-Liquid", details: "Salt Nic, 50MG, 30ML", price: 210.00, image: "https://www.cloudvape.co.za/wp-content/uploads/2023/09/Pods-n-Salts-50mg-30ml.jpg", colorClass: "btn-yellow", textColorClass: "text-yellow-300" },
-            { id: 56, name: "ELF DISPOSABLE VAPE BAR 2500 PUFF", description: "Disposable Vape Bar", details: "2500 Puffs", price: 160.00, image: "https://cdn.shopify.com/s/files/1/0595/1425/7564/products/elf-bar-2500-disposable-vape-pod-box-of-10-vape-puff-disposable-923624_1000x.jpg?v=1668364667", colorClass: "btn-green", textColorClass: "text-green-300" },
-            { id: 57, name: "WICKED JOOCE PREMIUM", description: "Premium E-Liquid", details: "High Quality Juice", price: 140.00, image: "https://wickedimports.co.za/wp-content/uploads/2022/04/Asssorted-Premium.png", colorClass: "btn-blue", textColorClass: "text-blue-300" },
             { id: 58, name: "SMOK NOVO 2 POD SYSTEM", description: "Pod System Kit", details: "Upgraded Novo Version", price: 350.00, image: "https://wickedimports.co.za/wp-content/uploads/2021/07/Vaping-Device-SMOK-Novo-2-Pod-System.png", colorClass: "btn-indigo", textColorClass: "text-indigo-300" },
-            { id: 59, name: "NASTY X RECHARGEABLE 14000", description: "Rechargeable Vape Bar", details: "14000 Puffs", price: 230.00, image: "https://media.takealot.com/covers_images/769d01d3bd0b484888f368565695b837/s-zoom.file", colorClass: "btn-violet", textColorClass: "text-purple-300" },
+
+            // Disposables & E-Liquids (With Flavors)
+            { id: 2, name: "Solobar S10000", description: "Rechargeable Bar 50MG", details: "10000 Puffs", price: 180.00, image: "https://bhikaimports.co.za/wp-content/uploads/2024/04/Apple-Smoothies.png", colorClass: "btn-green", textColorClass: "text-green-300", flavors: ["Apple Smoothies", "Lady Killer", "Watermelon Strawberry Freeze", "Blue Cherry Dragon Fruit", "Cherry Sparkling Juice", "Black Ice", "Cool Mint", "Grape Ice", "Ruby Rush", "Watermelon Ice", "White Gummy Bear", "Joker", "Mango Lemonade Ice", "Mixed Fruity", "Peach Pie", "Pineapple Orange Mint", "Raspberry Cherry", "Raspberry Lemon", "Sheikh Money", "Solo Bull"] },
+            { id: 8, name: "VOZOL VISTA 20000", description: "Rechargeable Vape Bar", details: "20000 Puffs", price: 285.00, image: "https://th.bing.com/th/id/OIP.MosHnR5U6rz2jVnvmFlmxAHaHa?cb=iwp2&rs=1&pid=ImgDetMain", colorClass: "btn-violet", textColorClass: "text-violet-300", flavors: ["Blue Razz Ice", "Grape Ice", "Miami Mint", "Mixed Berries", "Peach Ice", "Sour Apple Ice", "Strawberry Mango", "Watermelon Ice", "Cherry Cola", "Lemon Lime", "Peach Mango Watermelon", "Raspberry Watermelon", "Strawberry Raspberry Cherry", "Vanicreme Tobacco", "Watermelon Bubblegum", "Dragon Fruit Banana Cherry"] },
+            { id: 10, name: "NASTY RECHARGEABLE BAR 16000", description: "Rechargeable Bar 50MG", details: "16000 Puffs", price: 240.00, image: "https://wickedimports.co.za/wp-content/uploads/2024/02/Cola-Ice.png", colorClass: "btn-rose", textColorClass: "text-rose-300", flavors: ["Pineapple Ice", "Arctic Mint", "Cherry Peach Raspberry", "Double Watermelon", "Grape Ice", "Strawberry ice", "Peach Ice", "Berry Grape", "Blue Razz Ice", "Blackberry Ice", "Raspberry Twist", "Cola Ice", "Malibu"] },
+            { id: 12, name: "WICKED JOOCE PREMIUM", description: "Premium E-Liquid", details: "High Quality Juice", price: 140.00, image: "https://wickedimports.co.za/wp-content/uploads/2022/04/Asssorted-Premium.png", colorClass: "btn-lime", textColorClass: "text-lime-300", flavors: ["Blueberry", "Iced Apple", "Mango Ice", "Watermelon", "Double Mint", "Cherry Tobacco", "Gummy Sweets", "Cotton Candy", "Blue Mist", "Peach", "Coffee", "Energy Drink", "Vanilla", "Grape", "Litchi", "Black Cherry", "Strawberry", "Mixed Berry", "Rich Tobacco", "Menthol"] },
+            { id: 13, name: "VAPENGIN CERES RECHARGEABLE BAR", description: "Rechargeable Disposable", details: "Up to 30000 Puffs", price: 305.00, image: "https://wickedimports.co.za/wp-content/uploads/2024/12/Vapengin-Ceres-400x400.png", colorClass: "btn-yellow", textColorClass: "text-yellow-400", flavors: ["Blue Razz Ice", "Mango Ice", "Strawberry Watermelon", "Watermelon Ice", "Juicy Peach", "Peach Berry Ice", "Pineapple Apple Pear", "Raspberry Cherry Ice", "Sour Apple", "Strawberry Kiwi Ice"] },
+            { id: 16, name: "VAPENGIN RECHARGEABLE BAR 8500", description: "Rechargeable Bar 50MG", details: "8500 Puffs", price: 130.00, image: "https://wickedimports.co.za/wp-content/uploads/2024/03/Strawberry-Banana-Smoothie-800x800.png", colorClass: "btn-green", textColorClass: "text-green-400", flavors: ["Banana Milk", "Cool Mint", "Lady Killer", "Mango Ice", "Peach Ice", "Pink Lemonade", "Watermelon Ice", "Blue Razz", "Caramel Popcorn", "Gum Mint", "Sakura Grape", "Sour Mix Berries", "Strawberry Banana Smoothie", "Tropical Rainbow Sky"] },
+            { id: 17, name: "HELLVAPE DISPOSABLE POD 5000", description: "Disposable Pod 20MG", details: "5000 Puffs", price: 110.00, image: "https://www.losvapos.co.za/wp-content/uploads/2023/11/Los-Vapos-Hellvape-P1-5000-Puffs-Disposable-Flavour-Pod-20mg.jpg", colorClass: "btn-red", textColorClass: "text-red-400", flavors: ["Strawberry Sundae", "Pineapple Coconut Ice", "Watermelon", "Blueberry Raspberry Cherry", "Grape Ice", "Peach Ice", "Cappuccino Ice", "Blackcurrant Lychee", "Pineapple Mango Peach", "White Chocolate Strawberry"] },
+            { id: 22, name: "VOOM RECHARGEABLE BAR 12000 PLUS", description: "Rechargeable Disposable", details: "~12000 Puffs", price: 215.00, image: "https://arenatobacco.com/wp-content/uploads/Peach-ice.png", colorClass: "btn-cyan", textColorClass: "text-cyan-400", flavors: ["Blue Razz", "Blueberry", "Cool Mint", "Cotton Candy", "Fizz Cherry", "Grape Ice", "Lady Killer", "Lover 66", "Peach Ice", "Pina Colada", "Pink Lemonade", "Strawberry Ice", "Triple Mango", "Two Apple Liquorice", "Watermelon Ice"] },
+            { id: 23, name: "ELF RECHARGEABLE VAPE BAR- ICE KING", description: "Rechargeable Vape Bar", details: "Up to 25000 Puffs", price: 310.00, image: "https://www.expresstabacaria.com.br/timthumb.php?src=image/catalog/pod/poddescartavel/elfbar/40kice/40kiceking.png&w=800=&h=800&zc=1", colorClass: "btn-blue", textColorClass: "text-blue-400", flavors: ["Blue Razz Ice", "Cherry Pomegranate Cranberry", "Cherry Strazz", "Mango Magic", "Miami Mint", "Peach +", "Sour Lush Gummy", "Strawberry Berries", "Watermelon Ice", "Watermelon Lemonberry"] },
+            { id: 26, name: "PODS PLUS LONGFILL", description: "E-Liquid Concentrate", details: "Longfill E-Liquid", price: 92.00, image: "https://th.bing.com/th/id/OIP.UbSFoZA2qvhQqm8ZcmaDHAHaHa?rs=1&pid=ImgDetMain", colorClass: "btn-orange", textColorClass: "text-orange-300", flavors: ["Banana Blizzard", "Chew", "Chilled Cherry", "Dragon Frost", "Frozen Blueberry Cocktail", "Glacial Grape", "Pink Avalanche", "Raspberry Lychee Ice", "Zero Kelvin"] },
+            { id: 27, name: "PODS & SALTS LONGFILL", description: "E-Liquid Concentrate", details: "Longfill E-Liquid", price: 85.00, image: "https://s3.amazonaws.com/images.ecwid.com/images/72493436/4029866138.jpg", colorClass: "btn-yellow", textColorClass: "text-yellow-300", flavors: ["Wicksy Bubble", "Fresh Mint", "Cool Kiwi Berries", "Ice Watermelon", "Ice Mango", "Kiwi Apple Cool"] },
+            { id: 30, name: "NASTY RECHARGEABLE BAR MAX 30000 50MG", description: "Rechargeable Vape Bar", details: "30000 Puffs, 50MG", price: 310.00, image: "https://wickedimports.co.za/wp-content/uploads/2025/02/Nasty-30000-1-200x200.png", colorClass: "btn-indigo", textColorClass: "text-indigo-300", flavors: ["Strawberry Ice", "Watermelon Ice", "Red Bull", "Juicy Peach", "Mango", "Double Apple", "Grape", "Lychee", "Pineapple", "Spearmint"] },
+            { id: 31, name: "ZLAND MINI DISPOSABLE POD", description: "Disposable Pod", details: "For ZLAND System", price: 70.00, image: "https://jm-wholesale.co.uk/cdn/shop/files/Gray_kit_2048x2048.jpg?v=1738666919", colorClass: "btn-violet", textColorClass: "text-purple-300", flavors: ["Berry Mix", "Blueberry", "Cherry", "Cotton Candy", "Grape", "Ice", "Gum", "Mango", "Passion Fruit", "Peach", "Raspberry", "Strawberry", "Watermelon", "Lychee", "Pineapple"] },
+            { id: 32, name: "NASTY RECHARGEABLE BAR 14000", description: "Rechargeable Vape Bar", details: "14000 Puffs", price: 230.00, image: "https://www.usbandmore.co.za/cdn/shop/files/Screenshot2025-01-14at14-22-56NastyRechargeableBar-X-NIC14000-WickedImports_Pty_Ltd_1024x1024@2x.png?v=1736862721", colorClass: "btn-teal", textColorClass: "text-teal-300", flavors: ["Arctic Mint", "Berry Grape", "Blackcurrant", "Blue Razz Ice", "Caribbean Mango", "Cherry Peach Lemon", "Cherry Peach Raspberry", "Cotton Candy", "Double Watermelon", "Peach Ice", "Peach Mixed Berries", "Pineapple Ice", "Strawberry Ice", "Strawberry Mint Lemonade", "Tangy Apple Splash", "White Peach Raspberry"] },
+            { id: 33, name: "NASTY RECHARGEABLE BAR X-NIC", description: "Rechargeable Vape Bar", details: "9000 Puffs", price: 230.00, image: "https://coffeeandvape.co.za/cdn/shop/files/Strawberry-Ice-2_Nasty_Bar_X_9000_Disposable_Vape.webp?v=1725539052&width=1445", colorClass: "btn-pink", textColorClass: "text-pink-300", flavors: ["Arctic Mint", "Blackcurrant Berries", "Blue Razz Ice", "Caribbean Mango", "Cherry Peach Raspberry", "Cola Ice", "Cranberry Grape", "Double Watermelon", "Grape Ice", "Menthol", "Peach Ice", "Pineapple Ice", "Raspberry Watermelon", "Sour Apple Ice", "Strawberry Ice"] },
+            { id: 35, name: "ELF DISPOSABLE POD 9000", description: "Disposable Vape", details: "9000 Puffs", price: 140.00, image: "https://www.libertyvape.ca/cdn/shop/files/elf-bar-ew9000-disposable-pod-starter-kit-9000-puffs-16ml-41811400458479_1024x1024.webp?v=1718929333", colorClass: "btn-cyan", textColorClass: "text-cyan-300", flavors: ["California Cherry", "Dragon Strawnana", "Grape", "Mango", "Peach", "Sour Lush"] },
+            { id: 36, name: "VAPENGIN RECHARGEABLE BAR MARS 20000", description: "Rechargeable Vape Bar", details: "20000 Puffs", price: 295.00, image: "https://media.portmoni.com/84499/vapengin_mars.jpg", colorClass: "btn-rose", textColorClass: "text-rose-300", flavors: ["Blackberry Ice", "Blue Razz Ice", "Cherry Ice", "Grape Cranberry", "Juicy Peach", "Lychee Raspberry Cherry", "Mango Ice", "Passionfruit Kiwi Guava", "Pineapple Mint", "Watermelon Ice"] },
+            { id: 37, name: "SOLOBAR RECHARGEABLE REVOLVER POD", description: "Pod Accessory", details: "For Revolver Kit", price: 75.00, image: "https://wickedimports.co.za/wp-content/uploads/2024/06/POD-Solo-Bull-400x400.png", colorClass: "btn-amber", textColorClass: "text-amber-400", flavors: ["Afro Berries", "Blue Raspberry", "Blue Razz Cherry", "Blueberry Fusion", "Double Apple", "Fizzy Cherry", "Fizzy Guava", "Grape Ice", "Ice Pop", "Lady Killer", "Peach Mango Ice", "Pineapple Ice", "Rainbow Lemonade", "Sheikh Money", "Solo Berry", "Solo Bull", "Still Lemonade", "Strawberry Mint Menthol Mojito", "Watermelon Ice", "Watermelon Mint Slushy"] },
+            { id: 39, name: "NASTY DISPOSABLE POD", description: "Disposable Vape", details: "Approx. 900 Puffs", price: 115.00, image: "https://vape.co.uk/product/10mg-nasty-fix-disposable-vape-pod-675-puffs/JWN10mgNastyFixVape5.jpg", colorClass: "btn-red", textColorClass: "text-red-300", flavors: ["Aloe Grape", "Berry Grape", "Red Energy", "Strawberry Ice", "Watermelon Ice", "Peach Ice", "Passionfruit", "Gummy Bear"] },
+            { id: 40, name: "ELFBAR RECHARGEABLE VAPE BAR 18000", description: "Rechargeable Vape Bar", details: "18000 Puffs", price: 280.00, image: "https://media.portmoni.com/84499/ELF_BAR_GLkn6v8.jpg", colorClass: "btn-orange", textColorClass: "text-orange-300", flavors: ["Cherry Peach Lemonade", "Cotton Candy Ice", "Mango Peach Watermelon", "Peach Ice", "Pink Lemonade", "Blueberry Razz Lemon", "Grape Cherry", "Peach Berry", "Strawberry Grape", "Watermelon Lemon"] },
+            { id: 41, name: "NASTY RECHARGEABLE BAR 20000", description: "Rechargeable Vape Bar", details: "20000 Puffs, 50MG", price: 275.00, image: "https://vapewholesaleusa.com/media/amasty/webp/catalog/product/cache/d96b96d9c12f2c2b4ad9e39d4f520b12/n/a/nasty-disposable-20000-puff-1_jpg.webp", colorClass: "btn-yellow", textColorClass: "text-yellow-300", flavors: ["Peach Ice", "Arctic Mint", "Berry & Grape", "Blackberry Ice", "Cola Ice", "Cushman Mango Banana", "Cushman Strawberry", "Raspberry Twist", "Slow Blow", "Strawberry Lemon Ice", "Strawberry Mint Lemonade", "Strawberry Watermelon Ice", "Tropical Cherry"] },
+            { id: 42, name: "NASTY DLT RECHARGEABLE BAR 10000", description: "Rechargeable Vape Bar", details: "10000 Puffs, 3MG DLT", price: 260.00, image: "https://www.downtownvapoury.co.za/cdn/shop/files/nasty-dtl-rechargeable-bar-10000-puff-3mgdowntown-vapoury-913746.png?v=1715060467", colorClass: "btn-green", textColorClass: "text-green-300", flavors: ["Apple Peach", "Grape Ice", "Watermelon Ice", "Bad Blood", "Blue Raspberry Cherry", "Blue Sour Raspberry", "Cushman", "Lemon Cherry", "Strawberry Guava Kiwi", "Vitmo Bull"] },
+            { id: 48, name: "VOZOL SWITCH 1600C POD 50 MG", description: "Pod Accessory", details: "1600 Puffs, 50MG", price: 130.00, image: "https://th.bing.com/th/id/OIP.tATj62_yrVZ2A-etZJoM8QHaHa?w=900&h=900&rs=1&pid=ImgDetMain", colorClass: "btn-lime", textColorClass: "text-lime-300", flavors: ["Blue Razz Lemon", "Forest Berry Storm", "Grape Ice", "Kiwi Guava Passionfruit"] },
+            { id: 50, name: "LOCAL VAPING LIQUID DRIP 'N GO", description: "E-Liquid 30ML", details: "30MG Nicotine", price: 180.00, image: "https://th.bing.com/th/id/OIP.q5EKTguOKXb2OUE2WfGGbwHaHa?rs=1&pid=ImgDetMain", colorClass: "btn-rose", textColorClass: "text-rose-300", flavors: ["Apple Ice", "Cool Kiwi Berries", "Fresh Mint", "Jazz House", "Kiwi Apple Ice", "Mango Ice", "Grape Bubble", "RY4", "Watermelon Ice", "Wicksey Bubble"] },
+            { id: 51, name: "MINIPOD DISPOSABLE VAPE 1000", description: "Disposable Vape 50MG", details: "1000 Puffs", price: 100.00, image: "https://wickedimports.co.za/wp-content/uploads/2023/09/Peach-Mango.png", colorClass: "btn-amber", textColorClass: "text-amber-400", flavors: ["Cherry Peach Lemonade", "Cool Mint", "Grape Ice", "Gummy Bear", "Kiwi Passionfruit Guava", "Mango Peach Pineapple", "Pink Lemonade", "Blueberry Pomegranate", "Blueberry Sour Raspberry", "Cherry Lime Raspberry", "Lychee Raspberry Cherry", "Mango Passionfruit", "Peach Ice Tea", "Peach Mango", "Skittlez", "Strawberry Cherry Raspberry", "Strawberry Watermelon Bubblegum"] },
+            { id: 53, name: "NASTY 9000 PUFF RECHARGEABLE", description: "Rechargeable 50MG", details: "9000 Puffs", price: 210.00, image: "https://th.bing.com/th/id/R.78c9d9d10212cf3299a4887157fca1a6?rik=Qy3Cz%2fWngrDWng&riu=http%3a%2f%2fsavestore.co.za%2fcdn%2fshop%2ffiles%2fNasty9000.jpg%3fv%3d1728816391&ehk=zhi1aJAVL3Tvn6qNcyNTG8yBOcCZ9YRjsgMfj%2fjLmYw%3d&risl=&pid=ImgRaw&r=0", colorClass: "btn-red", textColorClass: "text-red-300", flavors: ["Aloe Grape", "Berry & Grape", "Honey Dew", "Kiwi Passionfruit Guava", "Mango", "Peach Ice", "Red Energy", "Strawberry Ice", "Watermelon Ice", "Passion Fruit", "Blue Raspberry Lemonade", "Fizzy Cherry", "Pomegranate Berry", "Mineral Water Peach", "Tropical Cherry"] },
+            { id: 54, name: "AMAREN DISPOSABLE VAPE 3500", description: "Disposable Vape", details: "3500 Puffs", price: 50.00, image: "https://got-a-lot.com/wp-content/uploads/2023/03/Joburg-Nights-AMA08.png", colorClass: "btn-orange", textColorClass: "text-orange-300", flavors: ["Strawberry Watermelon", "Cola", "Gummy", "Blue Mix", "Love 66", "Blueberry", "Passion Grapefruit", "Banana Ice", "Strawberry Kiwi", "Fresh Watermelon", "Pink Lemonade", "Blue Razz", "Fresh Mint", "Fizzy Cherry", "Strawberry Mango", "Grape Ice", "Peach Ice", "Grape Raspberry Lemon", "Red Energy", "Pineapple Ice", "Mango Ice", "Honey Dew", "Kiwi Passion Fruit Guava"] },
+            { id: 55, name: "LOCAL VAPING LIQUID PODS & SALTS", description: "Salt Nic 30ML", details: "50MG Nicotine", price: 210.00, image: "https://www.cloudvape.co.za/wp-content/uploads/2023/09/Pods-n-Salts-50mg-30ml.jpg", colorClass: "btn-yellow", textColorClass: "text-yellow-300", flavors: ["Sparkle On Ice", "Strawberry Banana", "Summer time", "Strawberry Ice Cream", "Energy Drink", "Peach Ice", "Mango Ice", "Grape Ice", "Blue Razz", "Lush Ice"] },
+            { id: 56, name: "ELF DISPOSABLE VAPE BAR 2500", description: "Disposable Vape Bar", details: "2500 Puffs", price: 160.00, image: "https://cdn.shopify.com/s/files/1/0595/1425/7564/products/elf-bar-2500-disposable-vape-pod-box-of-10-vape-puff-disposable-923624_1000x.jpg?v=1668364667", colorClass: "btn-green", textColorClass: "text-green-300", flavors: ["Juicy Peach", "Strawberry Ice", "Sour Apple", "Grape Energy", "Coconut Melon", "Bluerazz Lemonade", "Banana Milk", "Peach Mango Guava", "Mango Peach Watermelon"] },
+            { id: 59, name: "NASTY X RECHARGEABLE 14000", description: "Rechargeable Vape Bar", details: "14000 Puffs", price: 230.00, image: "https://media.takealot.com/covers_images/769d01d3bd0b484888f368565695b837/s-zoom.file", colorClass: "btn-violet", textColorClass: "text-purple-300", flavors: ["Blackcurrant Berries", "Caribbean Mango", "Cranberry Grape", "Peach Ice", "Pineapple Ice", "Sour Apple Ice", "Strawberry Ice"] },
+            
+            // Accessories & Other (No Flavors)
+            { id: 25, name: "NOVO POD REPLACEMENT", description: "Pod Accessory", details: "Replacement Pod", price: 65.00, image: "https://th.bing.com/th/id/OIP.IWYOLNVaLWG6e2TBOaXTDQHaHa?w=1200&h=1200&rs=1&pid=ImgDetMain", colorClass: "btn-red", textColorClass: "text-red-300" },
+            { id: 28, name: "RAW NICOTINE SHOT 50MG", description: "Nicotine Additive", details: "50MG Nicotine Shot", price: 110.00, image: "https://th.bing.com/th/id/OIP.1GRMUMaipFKehTjKKkst3gHaHa?rs=1&pid=ImgDetMain", colorClass: "btn-green", textColorClass: "text-green-300" },
+            { id: 29, name: "ONE CLOUD TUGBOAT REPLACEMENT PODS", description: "Pod Accessory", details: "For Tugboat Kit", price: 70.00, image: "https://image.made-in-china.com/2f0j00pcYoRzgCYWbO/Tugboat-Replaced-Cartridge-Super-Pod-7000-12000-Puffs-Manufacturer-Direct-Sales-Life-Pod-Vaporizer-Pod.jpg", colorClass: "btn-blue", textColorClass: "text-blue-300" },
+            { id: 43, name: "VAPORESSO XROS SERIES REPLACEMENT POD", description: "Pod Accessory", details: "For XROS Series", price: 65.00, image: "https://cdn11.bigcommerce.com/s-n0pphwyuq9/images/stencil/1280x1280/products/1007/5103/001__48831.1683262516.jpg?c=1&imbypass=on", colorClass: "btn-blue", textColorClass: "text-blue-300" },
+            { id: 52, name: "CBD DISPOSABLE VAPE PEN JACKPOT 600MG", description: "CBD Vape Pen", details: "600MG CBD", price: 430.00, image: "https://th.bing.com/th/id/OIP.J8NIPTlZad8SUiory4fLgQHaHa?rs=1&pid=ImgDetMain", colorClass: "btn-sky", textColorClass: "text-sky-300" },
             { id: 60, name: "HUBBLY COAL- BLUE MIX COCONUT SHELL COAL XL YELLOW 72 PIECE", description: "Hookah Accessory", details: "Coconut Shell Coal, 72 Pieces", price: 110.00, image: "https://wickedimports.co.za/wp-content/uploads/2023/01/HUB-COA027.png", colorClass: "btn-teal", textColorClass: "text-teal-300" },
             { id: 61, name: "HOOKAH LITE COAL", description: "Hookah Accessory", details: "Lite Coal", price: 30.00, image: "https://wickedimports.co.za/wp-content/uploads/2021/07/Hubbly-Bubbly-Coal-Hookah-Lite-Charcoal.png", colorClass: "btn-pink", textColorClass: "text-pink-300" },
             { id: 62, name: "SUPA GOLD LARGE", description: "Hookah Accessory", details: "Large Coal", price: 35.00, image: "https://wickedimports.co.za/wp-content/uploads/2021/07/Hubbly-Bubbly-Coal-Supa-Gold-Large.png", colorClass: "btn-lime", textColorClass: "text-lime-300" },
@@ -473,6 +477,7 @@
             { id: 65, name: "BLUE MIX COCONUT SHELL COAL 24 PIECE", description: "Hookah Accessory", details: "Coconut Shell Coal, 24 Pieces", price: 45.00, image: "https://royalsmokers.co.za/wp-content/uploads/2021/07/BLUE-MIX-COCONUT-SMALL-768x768.jpg", colorClass: "btn-amber", textColorClass: "text-amber-400" },
             { id: 66, name: "BLUE MIX COCONUT SHELL COAL 96 PIECE", description: "Hookah Accessory", details: "Coconut Shell Coal, 96 Pieces", price: 110.00, image: "https://royalsmokers.co.za/wp-content/uploads/2021/07/BLUE-MIX-COCONUT-LARGE-768x768.jpg", colorClass: "btn-sky", textColorClass: "text-sky-300" }
         ];
+
         const initialProducts = rawProductData.map((p, idx) => ({ ...p, originalFeaturedOrder: idx }));
         
         const productGridContainer = document.getElementById('productGrid');
@@ -516,7 +521,6 @@
 
             if (!Array.isArray(productsToRender) || productsToRender.length === 0) {
                 let message = "No products found matching your criteria.";
-                // You could add more specific messages here if needed, e.g., based on search term
                 productGridContainer.innerHTML = `<p class="text-center text-gray-300 col-span-full py-10">${message}</p>`;
                 return;
             }
@@ -524,19 +528,35 @@
             productsToRender.forEach(product => {
                 const productCard = document.createElement('div');
                 productCard.className = 'content-card product-card';
+                productCard.dataset.productId = product.id;
                 const productImage = product.image || `https://placehold.co/400x400/334155/e2e8f0?text=${encodeURIComponent(product.name)}`;
+                
+                let flavorSelectorHTML = '';
+                if (product.flavors && product.flavors.length > 0) {
+                    flavorSelectorHTML = `
+                        <div class="mb-3">
+                            <label for="flavor-select-${product.id}" class="sr-only">Select Flavor</label>
+                            <select id="flavor-select-${product.id}" class="flavor-select text-sm">
+                                ${product.flavors.map(flavor => `<option value="${flavor}">${flavor}</option>`).join('')}
+                            </select>
+                        </div>
+                    `;
+                } else {
+                    flavorSelectorHTML = `<p class="text-sm ${product.textColorClass || 'text-gray-300'} mb-3">${product.description}</p>`;
+                }
+
                 productCard.innerHTML = `
                     <div class="flex-grow">
                         <div class="product-image-container rounded-md overflow-hidden mb-4">
                             <img src="${productImage}" alt="${product.name}" class="w-full h-full object-cover" onerror="this.src='https.placehold.co/400x400/334155/e2e8f0?text=Image+Not+Found'; this.alt='Image not available';">
                         </div>
                         <h3 class="text-lg sm:text-xl font-semibold text-gray-50 mb-1">${product.name}</h3>
-                        <p class="text-sm ${product.textColorClass || 'text-gray-300'} mb-1">${product.description}</p>
+                        ${flavorSelectorHTML}
                         <p class="text-xs text-gray-400 mb-3">${product.details}</p>
                     </div>
-                    <div class="mt-4">
+                    <div class="mt-auto">
                         <p class="text-xl sm:text-2xl font-bold rainbow-text mb-3">R${product.price.toFixed(2)}</p>
-                        <button class="add-to-cart-btn rainbow-button ${product.colorClass || 'btn-indigo'} w-full text-sm" data-product-name="${product.name}" data-price="${product.price.toFixed(2)}">Add to Cart</button>
+                        <button class="add-to-cart-btn rainbow-button ${product.colorClass || 'btn-indigo'} w-full text-sm" data-product-id="${product.id}">Add to Cart</button>
                     </div>
                 `;
                 productGridContainer.appendChild(productCard);
@@ -555,27 +575,25 @@
                 searchTermDisplay.classList.add('hidden');
             }
 
-            let _products; // Corrected typo here
-            if (searchTerm === '') {
-                _products = [...initialProducts];
-            } else {
-                _products = initialProducts.filter(product =>
-                    (product.name && product.name.toLowerCase().includes(searchTerm)) ||
-                    (product.description && product.description.toLowerCase().includes(searchTerm)) ||
-                    (product.details && product.details.toLowerCase().includes(searchTerm))
-                );
-            }
+            let filteredProducts = initialProducts.filter(product =>
+                (product.name && product.name.toLowerCase().includes(searchTerm)) ||
+                (product.description && product.description.toLowerCase().includes(searchTerm)) ||
+                (product.details && product.details.toLowerCase().includes(searchTerm)) ||
+                (product.flavors && product.flavors.some(f => f.toLowerCase().includes(searchTerm)))
+            );
 
             if (sortBy === 'price_asc') {
-                _products.sort((a, b) => a.price - b.price);
+                filteredProducts.sort((a, b) => a.price - b.price);
             } else if (sortBy === 'price_desc') {
-                _products.sort((a, b) => b.price - a.price);
+                filteredProducts.sort((a, b) => b.price - a.price);
             } else if (sortBy === 'newest') {
-                _products.sort((a, b) => b.id - a.id); 
+                filteredProducts.sort((a, b) => b.id - a.id); 
             } else if (sortBy === 'featured') {
-                _products.sort((a, b) => a.originalFeaturedOrder - b.originalFeaturedOrder);
+                // To sort by featured, we need a stable sort based on the original order
+                // We'll sort the filtered array based on their original index
+                filteredProducts.sort((a, b) => a.originalFeaturedOrder - b.originalFeaturedOrder);
             }
-            renderProducts(_products);
+            renderProducts(filteredProducts);
         }
 
 
@@ -667,20 +685,25 @@
         }
 
         function addEventListenersToCartButtons() {
-            const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
-            addToCartButtons.forEach(button => {
-                button.replaceWith(button.cloneNode(true)); 
-            });
             document.querySelectorAll('.add-to-cart-btn').forEach(button => {
                 button.addEventListener('click', (event) => {
-                    const productName = button.getAttribute('data-product-name');
-                    const productPrice = parseFloat(button.getAttribute('data-price'));
-                    const existingItem = cart.find(item => item.name === productName);
+                    const productId = button.getAttribute('data-product-id');
+                    const product = initialProducts.find(p => p.id == productId);
+                    
+                    if (!product) return;
+
+                    let finalProductName = product.name;
+                    const flavorSelect = document.getElementById(`flavor-select-${product.id}`);
+                    if (flavorSelect) {
+                        finalProductName = `${product.name} - ${flavorSelect.value}`;
+                    }
+
+                    const existingItem = cart.find(item => item.name === finalProductName);
 
                     if (existingItem) {
                         existingItem.quantity += 1;
                     } else {
-                        cart.push({ name: productName, price: productPrice, quantity: 1 });
+                        cart.push({ name: finalProductName, price: product.price, quantity: 1 });
                     }
                     updateCartDisplay();
                     createSmokeEffect(button, event);
@@ -689,11 +712,9 @@
                     const originalClasses = Array.from(button.classList);
                     const colorClassToRemove = originalClasses.find(cls => cls.startsWith('btn-') && cls !== 'btn-green');
 
-
                     button.textContent = 'Added!';
                     if (colorClassToRemove) button.classList.remove(colorClassToRemove);
                     button.classList.add('btn-green');
-
 
                     setTimeout(() => {
                         button.textContent = originalText;
